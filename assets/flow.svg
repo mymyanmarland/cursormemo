@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="250" viewBox="0 0 1040 250">
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset=".55" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1040" height="250" rx="16" fill="#0a1120"/>
+
+  <!-- connectors -->
+  <g stroke="#2b4a73" stroke-width="3">
+    <line x1="232" y1="105" x2="288" y2="105"/>
+    <line x1="502" y1="105" x2="558" y2="105"/>
+    <line x1="772" y1="105" x2="828" y2="105"/>
+  </g>
+  <!-- travelling pulses -->
+  <circle r="6" fill="#22d3ee">
+    <animateMotion path="M232 105 H288" dur="1.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#38bdf8">
+    <animateMotion path="M502 105 H558" dur="1.6s" begin="0.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.6s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="6" fill="#a855f7">
+    <animateMotion path="M772 105 H828" dur="1.6s" begin="1s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.6s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- boxes -->
+  <g font-family="'Segoe UI', system-ui, sans-serif">
+    <g>
+      <rect x="22" y="50" width="210" height="110" rx="14" fill="#0f1f38" stroke="#22d3ee" stroke-opacity=".65" stroke-width="1.6"/>
+      <circle cx="127" cy="86" r="15" fill="none" stroke="#22d3ee" stroke-width="3">
+        <animate attributeName="r" values="13;17;13" dur="2.6s" repeatCount="indefinite"/>
+        <animate attributeName="stroke-opacity" values="1;.4;1" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="127" cy="86" r="4.5" fill="#22d3ee"/>
+      <text x="127" y="126" text-anchor="middle" font-size="19" font-weight="700" fill="#e6f2ff">CAPTURE</text>
+      <text x="127" y="186" text-anchor="middle" font-size="14.5" fill="#8fb0d8">hooks watch your session</text>
+      <text x="127" y="206" text-anchor="middle" font-size="14.5" fill="#8fb0d8">prompts · tools · outcomes</text>
+    </g>
+    <g>
+      <rect x="292" y="50" width="210" height="110" rx="14" fill="#0f1f38" stroke="#38bdf8" stroke-opacity=".65" stroke-width="1.6"/>
+      <path d="M357 70 l14 26 h-28 Z M371 70 l14 26 h-28 Z" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linejoin="round" transform="translate(-14,0)">
+        <animate attributeName="stroke-opacity" values="1;.45;1" dur="2.6s" begin="0.5s" repeatCount="indefinite"/>
+      </path>
+      <text x="397" y="126" text-anchor="middle" font-size="19" font-weight="700" fill="#e6f2ff">SANITIZE</text>
+      <text x="397" y="186" text-anchor="middle" font-size="14.5" fill="#8fb0d8">secrets &amp; noise stripped</text>
+      <text x="397" y="206" text-anchor="middle" font-size="14.5" fill="#8fb0d8">before anything is stored</text>
+    </g>
+    <g>
+      <rect x="562" y="50" width="210" height="110" rx="14" fill="#0f1f38" stroke="#7c8cf8" stroke-opacity=".65" stroke-width="1.6"/>
+      <g stroke="#818cf8" stroke-width="3" fill="none">
+        <rect x="652" y="66" width="40" height="30" rx="5">
+          <animate attributeName="stroke-opacity" values="1;.45;1" dur="2.6s" begin="1s" repeatCount="indefinite"/>
+        </rect>
+        <line x1="660" y1="76" x2="684" y2="76"/>
+        <line x1="660" y1="86" x2="678" y2="86"/>
+      </g>
+      <text x="667" y="126" text-anchor="middle" font-size="19" font-weight="700" fill="#e6f2ff">CONSOLIDATE</text>
+      <text x="667" y="186" text-anchor="middle" font-size="14.5" fill="#8fb0d8">notes become wiki pages</text>
+      <text x="667" y="206" text-anchor="middle" font-size="14.5" fill="#8fb0d8">git-versioned markdown</text>
+    </g>
+    <g>
+      <rect x="832" y="50" width="186" height="110" rx="14" fill="#0f1f38" stroke="#a855f7" stroke-opacity=".65" stroke-width="1.6"/>
+      <g transform="translate(897,66)">
+        <path d="M0 14 a14 14 0 1 1 4 10" fill="none" stroke="#a855f7" stroke-width="3.4" stroke-linecap="round"/>
+        <polygon points="-3,2 9,4 2,15" fill="#a855f7"/>
+        <animateTransform attributeName="transform" type="rotate" values="0 14 14; -360 14 14" dur="7s" repeatCount="indefinite" additive="sum"/>
+      </g>
+      <text x="925" y="126" text-anchor="middle" font-size="19" font-weight="700" fill="#e6f2ff">RECALL</text>
+      <text x="925" y="186" text-anchor="middle" font-size="14.5" fill="#8fb0d8">next session starts briefed</text>
+      <text x="925" y="206" text-anchor="middle" font-size="14.5" fill="#8fb0d8">bounded handoff, ~21 ms</text>
+    </g>
+  </g>
+  <rect x="22" y="226" width="996" height="3" rx="1.5" fill="url(#fg)" opacity=".5">
+    <animate attributeName="opacity" values=".25;.6;.25" dur="4s" repeatCount="indefinite"/>
+  </rect>
+</svg>
