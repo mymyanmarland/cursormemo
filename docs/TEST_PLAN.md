@@ -35,6 +35,25 @@ server preserved. T6 (update) is covered by the pinned-version path in T1/T3.
 T10 (unsupported OS) is code-reviewed; untested on a foreign OS. Engine data
 directory confirmed empirically: `~/.local/share/ai-memory`.
 
+## Results — Milestone 2 (2026-10-20)
+
+Live-sandbox verification against the real engine (server started manually,
+no systemd in the VM):
+
+- **Category mapping:** all 10 mission categories map onto the engine's
+  native kind × tier × tag model — see `docs/MEMORY_MODEL.md`. No custom
+  schema needed.
+- **Retrieval benchmark:** 16 pages / 2 projects / 9 labelled queries —
+  hit@1 **100%**, hit@3 **100%**, median latency **21 ms** (FTS5).
+  Semantic search not justified on this evidence; decision recorded.
+- **Project isolation:** scoped search leaks nothing across projects;
+  `--global` is opt-in and scope-labelled.
+- **Crash recovery:** `kill -9` on the server + restart → all pages intact,
+  correct top hits.
+- **Store-level continuity:** fresh process recalls prior process's pages
+  exactly. Live-agent handoff brief (real Cursor hooks) remains the open
+  real-machine item.
+
 ## Later milestones
 
 - Milestone 2: scripted two-session continuity test + interruption recovery;
