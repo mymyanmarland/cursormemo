@@ -74,6 +74,20 @@ Backup & portability, all against the real engine in sandboxes:
   rejected with SHA-256 MISMATCH, exit 1) / preview (page listing without
   restoring) — all PASS.
 
+## Results — Milestone 5 (2026-10-20)
+
+- **Agent presets:** `setup --agent claude-code --agent codex` wrote real
+  config in a sandbox HOME (`~/.claude.json`, `~/.claude/settings.json`,
+  `~/.codex/config.toml`, all containing the ai-memory entry). Installer
+  `--agents=cursor,claude-code,codex` end-to-end: exit 0, all three
+  verified wired, pre-existing unrelated MCP entry preserved, config
+  backup created. (Service-start warnings in the sandbox are the known
+  no-systemd-bus limitation, not a wiring failure.)
+- **Project Intelligence:** generated from the M4 sandbox store — project
+  card shows last activity, counts, oldest open task, and the bug-KB entry
+  with its recorded fix. Stale-task rule proven on an aged fixture
+  (pending page backdated 30 days → "has been open 30 days" warning).
+
 ## Later milestones
 
 - Milestone 2: scripted two-session continuity test + interruption recovery;
