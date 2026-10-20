@@ -209,6 +209,7 @@
     <button class="tab active" data-page="home">ပင်မစာမျက်နှာ</button>
     <button class="tab" data-page="install">တင်နည်း</button>
     <button class="tab" data-page="usage">သုံးနည်း</button>
+    <button class="tab" data-page="tech">နည်းပညာ</button>
     <button class="tab" data-page="faq">မေးလေ့ရှိသောမေးခွန်းများ</button>
   </div>
 </nav>
@@ -395,6 +396,92 @@
     </div>
 
     <div class="note mm mt">📖 <b>မှတ်စုတွေကို ကိုယ်တိုင် ကြည့်ချင်ရင်</b> — Browser ထဲမှာ <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> ကို ဖွင့်ပါ။ မှတ်စု စာမျက်နှာတွေကို စာအုပ်လို ဖတ်လို့ရတယ်။</div>
+  </section>
+
+  <!-- ============ TAB: TECH ============ -->
+  <section class="page" id="page-tech">
+    <h2 class="mm">ဘယ်လို <span class="grad">နည်းစနစ်နဲ့</span> ဖန်တီးထားလဲ</h2>
+    <p class="sub mm">CursorMemo က အပိုင်း ၂ ပိုင်း ပေါင်းစပ်ထားတာ — နောက်ကွယ်က အင်ဂျင် (ai-memory) နဲ့ အပေါ်က ထုပ်ပိုးမှု (CursorMemo)။ တစ်ခုချင်းစီ ဘယ်လို လုပ်ထားလဲ ရှင်းပြထားတယ်။</p>
+
+    <h2 class="mm" style="font-size:21px">အပိုင်း ၁ — အင်ဂျင်: ai-memory</h2>
+    <p class="sub mm" style="margin-bottom:14px">Rust ဆိုတဲ့ programming language နဲ့ ရေးထားတဲ့ program တစ်ခုတည်း (binary တစ်ဖိုင်တည်း)။ Server သီးခြား, database သီးခြား တင်စရာ မလိုဘူး — အဲ့ဒီတစ်ဖိုင်တည်းက အကုန် လုပ်တယ်။</p>
+
+    <div class="flow" style="margin-top:6px">
+      <div class="fstep">
+        <div class="num">CURSOR</div>
+        <div class="em">💻</div>
+        <h3 class="mm">Cursor</h3>
+        <p class="mm">မင်း code ရေးတဲ့ နေရာ။ အဖြစ်အပျက်တွေကို hooks က မှတ်တယ်။</p>
+      </div>
+      <div class="farrow">⇄</div>
+      <div class="fstep">
+        <div class="num">MCP + HOOKS</div>
+        <div class="em">🔌</div>
+        <h3 class="mm">ချိတ်ဆက်မှု</h3>
+        <p class="mm">MCP ဆိုတဲ့ စံနှုန်းနဲ့ AI က မှတ်စုကို ရှာ/ဖတ်တယ်။ Hooks က session အစ/အဆုံးကို မှတ်တယ်။</p>
+      </div>
+      <div class="farrow">⇄</div>
+      <div class="fstep">
+        <div class="num">AI-MEMORY</div>
+        <div class="em">🧠</div>
+        <h3 class="mm">မှတ်စု server</h3>
+        <p class="mm">ကိုယ့်စက်ထဲမှာပဲ run တယ် (127.0.0.1)။ မှတ်စုတွေ စုစည်း, သိမ်း, ပြန်ရှာပေးတယ်။</p>
+      </div>
+    </div>
+
+    <h2 class="mm mt" style="font-size:21px">အလုပ်လုပ်ပုံ အဆင့် ၄ ဆင့်</h2>
+    <div class="steps mt" style="margin-top:14px">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3 class="mm">မှတ်ယူတယ် (Capture)</h3>
+          <p class="mm">Cursor ရဲ့ lifecycle hooks က session တစ်ခုလုံးရဲ့ အဖြစ်အပျက်တွေ — မင်း ဘာမေးလဲ၊ AI ဘာ tool သုံးလဲ၊ session ဘယ်တော့ စပြီး ဘယ်တော့ ပြီးလဲ — ကို တိတ်တိတ်လေး server ဆီ ပို့တယ်။</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3 class="mm">စစ်ပြီး သန့်တယ် (Sanitize)</h3>
+          <p class="mm">မသိမ်းခင် အရင် စစ်တယ် — password, API key လို အရေးကြီးတဲ့ အရာတွေ ပါလာရင် ဖယ်ပြီးမှ သိမ်းတယ်။</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3 class="mm">စာမျက်နှာ အဖြစ် စုစည်းတယ် (Consolidate)</h3>
+          <p class="mm">Session ပြီးတာနဲ့ အဖြစ်အပျက်တွေကို ဖတ်ရလွယ်တဲ့ markdown စာမျက်နှာတွေ အဖြစ် ပြောင်းတယ်။ ဒီစာဖိုင်တွေက မှတ်စုရဲ့ မူရင်း အရင်းအမြစ် — git နဲ့ version မှတ်တမ်း ထိန်းထားတယ်။ ရှာရမြန်အောင် SQLite database (FTS5 full-text search) နဲ့ အညွှန်း ထပ်လုပ်တယ်။</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3 class="mm">ပြန်ရှာပြီး လက်ဆင့်ကမ်းတယ် (Recall + Handoff)</h3>
+          <p class="mm">နောက် session စတာနဲ့ ရှေ့ session ရဲ့ အကျဉ်းချုပ်ကို AI ဆီ အလိုအလျောက် ပို့ပေးတယ်။ AI က လိုရင် မှတ်စုထဲမှာ full-text search နဲ့ အသေးစိတ် ထပ်ရှာလို့ရတယ်။ အခြေခံ ပုံစံမှာ ဒီအဆင့်အားလုံး AI API လုံးဝ မသုံးဘူး — key မလိုဘူး။</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mm mt" style="font-size:21px">အပိုင်း ၂ — ထုပ်ပိုးမှု: CursorMemo</h2>
+    <p class="sub mm" style="margin-bottom:14px">CursorMemo ကိုယ်တိုင်က code အသစ် မဟုတ်ဘူး။ သူများတွေ အလွယ်တကူ တင်သုံးနိုင်အောင် လုပ်ထားတဲ့ ထုပ်ပိုးမှုပဲ။</p>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📦</div>
+        <h3 class="mm">Installer scripts</h3>
+        <p class="mm">Windows အတွက် PowerShell script, Linux/macOS အတွက် Bash script။ အဲ့ဒီ script တွေက ai-memory ရဲ့ တရားဝင် installer ကို ခေါ်သုံးပြီး Cursor တစ်ခုတည်းနဲ့ပဲ ချိတ်ဖို့ <code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace;font-size:13.5px">setup --agent cursor</code> ဆိုတဲ့ အမိန့်ကို run ပေးတယ်။</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌐</div>
+        <h3 class="mm">ဒီ website</h3>
+        <p class="mm">Static web page တစ်ဖိုင်တည်း (HTML + CSS + JavaScript)။ Framework မပါ, build လုပ်စရာ မလို။ Server ပေါ်မှာ nginx နဲ့ တင်ပြီး Let's Encrypt HTTPS လက်မှတ် သုံးထားတယ်။</p>
+      </div>
+      <div class="card">
+        <div class="icon">🐙</div>
+        <h3 class="mm">GitHub + MIT license</h3>
+        <p class="mm">Source code အကုန်ကို GitHub မှာ public တင်ထားတယ်။ ai-memory လည်း MIT, CursorMemo လည်း MIT — ဘယ်သူမဆို အခမဲ့ သုံး, ပြင်, ပြန်ဝေလို့ရတယ်။</p>
+      </div>
+    </div>
+
+    <div class="note mm mt">🔍 <b>အကျဉ်းချုပ်</b> — Rust program တစ်ခုတည်းက မှတ်စု server အဖြစ် ကိုယ့်စက်ထဲမှာ run တယ်။ Cursor က MCP + hooks နဲ့ ချိတ်တယ်။ မှတ်စုက markdown စာဖိုင်တွေ + SQLite အညွှန်း။ CursorMemo ကတော့ အဲ့ဒါကို တစ်ချက် install နဲ့ မြန်မာ လမ်းညွှန် ပေါင်းထည့်ထားတဲ့ ထုပ်ပိုးမှု။</div>
   </section>
 
   <!-- ============ TAB: FAQ ============ -->
