@@ -1,0 +1,54 @@
+# CursorMemo
+
+Cursor ထဲမှာ code ရေးတိုင်း သုံးတဲ့ AI အတွက် မှတ်ဉာဏ်ကောင်းစေတဲ့ တပ်ဆင်ရေးအထုပ်။
+
+## ဒါ ဘာလဲ
+
+Cursor ရဲ့ AI က စကားပြောခန်း တစ်ခု ပြီးတိုင်း မေ့သွားတတ်တယ်။ မနေ့က ဘာလုပ်ခဲ့လဲ ဒီနေ့ ပြန်မေးရင် မမှတ်မိတော့ဘူး။
+
+ဒီ tool က **မှတ်စုစာအုပ်တစ်အုပ်** နဲ့ တူတယ်။ မင်း အလုပ်လုပ်နေတိုင်း ဘာလုပ်ခဲ့လဲ၊ ဘာအဆင်ပြေလဲ၊ ဘာကျန်နေသေးလဲ ဆိုတာ တိတ်တိတ်လေး မှတ်ထားပေးတယ်။ နောက်တစ်ခါ project ဖွင့်တာနဲ့ AI က အဲ့ဒီမှတ်စုကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။ မင်း အစကနေ ပြန်ရှင်းပြစရာ မလိုတော့ဘူး။
+
+နောက်ကွယ်မှာ အလုပ်လုပ်ပေးတာက `ai-memory` ဆိုတဲ့ open source program (MIT license, GitHub star တစ်သောင်းကျော်)။ ဒီ repo ကတော့ မြန်မာအသုံးပြုသူတွေ အလွယ်တကူ တင်သုံးနိုင်အောင် ပြင်ဆင်ထားတဲ့ ထုပ်ပိုးမှုပဲ။ Code ကို ပြန်ရေးထားတာ မဟုတ်ဘူး။
+
+## တင်နည်း (Windows)
+
+PowerShell ဖွင့်ပြီး ဒါကို ကူးထည့်ပြီး Enter နှိပ်:
+
+```powershell
+irm https://cursormemo.funapp.live/install.ps1 | iex
+```
+
+ဒါဆိုရင် ဒါတွေ အလိုအလျောက် ဖြစ်သွားမယ်:
+
+1. ai-memory ကို download လုပ်ပြီး တင်ပေးမယ်
+2. Cursor နဲ့ ချိတ်ပေးမယ် (MCP + hooks + skills)
+
+Linux / macOS / WSL2 သုံးသူများ:
+
+```bash
+curl -fsSL https://cursormemo.funapp.live/install.sh | sh
+```
+
+## တင်ပြီးရင် လုပ်ရန်
+
+1. Cursor ကို ပိတ်ပြီး ပြန်ဖွင့် (သို့မဟုတ် Settings → MCP မှာ ai-memory server ကို ပိတ်/ဖွင့် လုပ်)
+2. Project တစ်ခုဖွင့်ပြီး AI ကို မေး: "What do you remember about this project?"
+
+## နေ့တိုင်း သုံးနည်း
+
+ဘာမှ အထူးလုပ်စရာ မလိုဘူး။ ပုံမှန်အတိုင်း code ရေးရုံပဲ။ လိုရင် AI ကို ဒီလိုမေးလို့ရတယ်:
+
+- "Where did we leave off?" — ဘယ်နေရာမှာ ရပ်ခဲ့လဲ
+- "Have we discussed X?" — X အကြောင်း ဆွေးနွေးဖူးလား
+- "Catch me up" — အကျဉ်းချုပ် ပြောပြ
+
+## ဖျက်နည်း
+
+```powershell
+ai-memory uninstall --apply
+```
+
+## License
+
+- ဒီ ထုပ်ပိုးမှု (installer + လမ်းညွှန်): MIT
+- အခြေခံ program `ai-memory`: MIT, © akitaonrails — အသေးစိတ် `NOTICE.md` ကြည့်
