@@ -457,6 +457,46 @@
     </div>
 
     <div class="note mt"><span class="L-mm mm">📖 <b>မှတ်စုတွေကို ကိုယ်တိုင် ကြည့်ချင်ရင်</b> — Browser ထဲမှာ <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> ကို ဖွင့်ပါ။ မှတ်စု စာမျက်နှာတွေကို စာအုပ်လို ဖတ်လို့ရတယ်။</span><span class="L-en">📖 <b>Want to browse the notes yourself?</b> Open <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> in your browser — you can read the notebook pages like a book.</span></div>
+
+    <h2 class="mt" style="font-size:21px"><span class="L-mm mm">Dashboard ဝင်နည်း (Sign in)</span><span class="L-en">Signing in to the dashboard</span></h2>
+    <p class="sub L-mm mm" style="margin-bottom:14px">Dashboard ကို ပထမဆုံး ဖွင့်ရင် browser က username နဲ့ password တောင်းတယ်။ အကောင့် သီးခြား ဖွင့်စရာ မလိုဘူး — ဒီလို ဝင်ပါ:</p>
+    <p class="sub L-en" style="margin-bottom:14px">The first time you open the dashboard, the browser asks for a username and password. There is no separate account to create — sign in like this:</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3 class="L-mm mm">Username — ကြိုက်တာ ထည့်</h3><h3 class="L-en">Username — anything you like</h3>
+          <p class="L-mm mm">ဥပမာ <code>admin</code> လို့ ရိုက်ထည့်ရင် ရပြီ။ စနစ်က username ကို မစစ်ဘူး။</p>
+          <p class="L-en">Type anything, for example <code>admin</code>. The system does not check the username.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3 class="L-mm mm">Password — ကိုယ့်စက်ထဲက token ဖိုင်</h3><h3 class="L-en">Password — the token file on your machine</h3>
+          <p class="L-mm mm">Password က ကိုယ့်စက်ထဲမှာ သိမ်းထားတဲ့ token ဖိုင်ထဲက စာသားပဲ။ Windows (PowerShell) မှာ ဒီ command နဲ့ ကြည့်ပြီး ကူးထည့်ပါ:</p>
+          <p class="L-en">The password is the text inside a token file stored on your own machine. On Windows (PowerShell), view it with this command and paste it in:</p>
+          <div class="cmdrow" style="margin-top:10px">
+            <code id="cmd-token-win">Get-Content "$env:LOCALAPPDATA\ai-memory\auth-tokens\default"</code>
+            <button class="copy" data-target="cmd-token-win">Copy</button>
+          </div>
+          <p class="L-mm mm" style="margin-top:10px">WSL2 / Linux ဆိုရင်:</p>
+          <p class="L-en" style="margin-top:10px">On WSL2 / Linux instead:</p>
+          <div class="cmdrow" style="margin-top:10px">
+            <code id="cmd-token-sh">cat ~/.local/share/ai-memory/auth-tokens/default</code>
+            <button class="copy" data-target="cmd-token-sh">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3 class="L-mm mm">Token ကို လျှို့ဝှက်ထား</h3><h3 class="L-en">Keep the token secret</h3>
+          <p class="L-mm mm">အဲ့ဒီ token က ကိုယ့် မှတ်စုတွေရဲ့ သော့ချက်ပဲ။ ဘယ်သူ့ကိုမှ မပေးနဲ့၊ chat ထဲ၊ screenshot ထဲ မပါစေနဲ့။</p>
+          <p class="L-en">That token is the key to your notes. Never share it with anyone, and keep it out of chats and screenshots.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ TAB: TECH ============ -->
@@ -596,6 +636,11 @@
         <h3 class="L-mm mm">ဖြုတ်ချင်ရင် ဘယ်လိုလုပ်ရမလဲ?</h3><h3 class="L-en">How do I uninstall it?</h3>
         <p class="L-mm mm">Terminal မှာ <code>ai-memory uninstall --apply</code> ကို run ပါ။ ချိတ်ဆက်မှုတွေကို သန့်ရှင်းစွာ ဖယ်ပေးပြီး မှတ်စုတွေကို ဖျက်မလား မေးပေးတယ် — သိမ်းထားချင်ရင် သိမ်းထားလို့ရတယ်။</p>
         <p class="L-en">Run <code>ai-memory uninstall --apply</code> in a terminal. It cleanly removes the wiring and asks before deleting any notes — you can keep them if you want.</p>
+      </div>
+      <div class="qa">
+        <h3 class="L-mm mm">Dashboard ဝင်တာ username/password တောင်းနေတယ် — ဘာထည့်ရမလဲ?</h3><h3 class="L-en">The dashboard asks for a username/password — what do I enter?</h3>
+        <p class="L-mm mm">Username က ကြိုက်တာ ထည့်လို့ရတယ် (ဥပမာ <code>admin</code>)။ Password က ကိုယ့်စက်ထဲက token ဖိုင်ထဲက စာသား — Windows ဆိုရင် PowerShell မှာ <code>Get-Content "$env:LOCALAPPDATA\ai-memory\auth-tokens\default"</code> နဲ့ ကြည့်ပြီး ကူးထည့်ပါ။ အသေးစိတ်ကို သုံးနည်း စာမျက်နှာက "Dashboard ဝင်နည်း" အပိုင်းမှာ ရေးထားတယ်။</p>
+        <p class="L-en">The username can be anything (for example <code>admin</code>). The password is the text in the token file on your machine — on Windows, view it in PowerShell with <code>Get-Content "$env:LOCALAPPDATA\ai-memory\auth-tokens\default"</code> and paste it in. Full steps are in the "Signing in to the dashboard" section of the Usage page.</p>
       </div>
       <div class="qa">
         <h3 class="L-mm mm">ဒါက ai-memory နဲ့ ဘာကွာလဲ?</h3><h3 class="L-en">How is this different from ai-memory itself?</h3>
