@@ -19,3 +19,7 @@ Funapp (Kyaw Myo Naing) and are provided under the MIT License (see `LICENSE`).
 
 The full MIT license text of ai-memory is available at:
 https://github.com/akitaonrails/ai-memory/blob/main/LICENSE
+
+Note: the ai-memory program installed by the scripts in this repo is a
+separate work (c) akitaonrails, also MIT-licensed. It is covered by this
+NOTICE, not by this repo's LICENSE file.
