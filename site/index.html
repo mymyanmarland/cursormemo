@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CursorMemo — Long-term memory for Cursor</title>
+<meta name="description" content="One-click install: give Cursor a long-term memory. Your AI stops forgetting — pick up every project exactly where you left off.">
+<style>
+  :root{
+    --bg:#0b0e1a; --panel:#12172b; --line:#232a47; --text:#eef0ff; --muted:#9aa3c7;
+    --gold:#e8c15a; --gold2:#f5d97e; --ok:#3ddc97;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1000px 500px at 50% -100px,#1c2450 0%,var(--bg) 60%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 20px 64px}
+  .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--gold2);font-size:13px;letter-spacing:.12em;text-transform:uppercase;background:rgba(232,193,90,.06)}
+  h1{font-size:44px;line-height:1.1;margin:18px 0 10px}
+  h1 .accent{color:var(--gold)}
+  p.lead{font-size:18px;color:var(--muted);line-height:1.6;margin:0 0 34px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 16px}
+  .card h2{font-size:15px;margin:0 0 12px;color:var(--gold2);letter-spacing:.04em}
+  .cmd{display:flex;gap:10px;align-items:stretch}
+  code.cmdline{flex:1;display:block;background:#0a0d18;border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-family:ui-monospace,Consolas,monospace;font-size:14px;color:var(--ok);overflow-x:auto;white-space:nowrap}
+  button.copy{border:1px solid var(--gold);background:transparent;color:var(--gold2);border-radius:10px;padding:0 18px;font-size:14px;cursor:pointer}
+  button.copy:hover{background:rgba(232,193,90,.12)}
+  ol.steps{color:var(--muted);line-height:1.8;padding-left:20px;margin:0}
+  ol.steps b{color:var(--text)}
+  .links{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap}
+  .links a{color:var(--gold2);text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 16px;background:var(--panel)}
+  .links a:hover{border-color:var(--gold)}
+  footer{margin-top:40px;color:var(--muted);font-size:13px;line-height:1.7}
+  footer a{color:var(--gold2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Funapp · Open Source · MIT</span>
+  <h1>CursorMemo<br><span class="accent">Cursor stops forgetting.</span></h1>
+  <p class="lead">Cursor's AI forgets everything when a chat ends. CursorMemo gives it a notebook: what you did, what failed, and what's still open — written down automatically, and read back at the start of your next session. No re-explaining, ever.</p>
+
+  <div class="card">
+    <h2>WINDOWS — PowerShell, one line</h2>
+    <div class="cmd">
+      <code class="cmdline" id="cmd-win">irm https://cursormemo.funapp.live/install.ps1 | iex</code>
+      <button class="copy" data-target="cmd-win">Copy</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>LINUX / macOS / WSL2 — one line</h2>
+    <div class="cmd">
+      <code class="cmdline" id="cmd-sh">curl -fsSL https://cursormemo.funapp.live/install.sh | sh</code>
+      <button class="copy" data-target="cmd-sh">Copy</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AFTER INSTALLING</h2>
+    <ol class="steps">
+      <li><b>Restart Cursor</b> (or toggle the ai-memory server off/on in Settings → MCP).</li>
+      <li><b>Open any project</b> and ask the agent: <i>"What do you remember about this project?"</i></li>
+      <li><b>Just work as usual.</b> The memory writes itself — and the next session picks up where you left off.</li>
+    </ol>
+  </div>
+
+  <div class="links">
+    <a href="https://github.com/mymyanmarland/cursormemo">GitHub — source &amp; Burmese guide</a>
+    <a href="https://github.com/akitaonrails/ai-memory">Upstream: ai-memory</a>
+  </div>
+
+  <footer>
+    CursorMemo is a one-click distribution of <a href="https://github.com/akitaonrails/ai-memory">ai-memory</a> (MIT, by akitaonrails) with a Burmese guide, built by <a href="https://funapp.live">Funapp</a>. Uninstall anytime: <code>ai-memory uninstall --apply</code>
+  </footer>
+</div>
+<script>
+  document.querySelectorAll('button.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      var text = el.textContent.trim();
+      function done(){ btn.textContent = 'Copied ✓'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1800); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallback(); });
+      } else { fallback(); }
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+  });
+</script>
+</body>
+</html>
