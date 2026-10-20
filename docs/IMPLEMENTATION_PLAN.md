@@ -47,12 +47,17 @@ the v1 happy path; docs shipped in-repo.
 - [ ] Deferred: Overview+ live status (last capture, hook/MCP status) via
       `/api/v1`/CLI — later milestone.
 
-## Milestone 4 — P1/P2: Backup & portability wrapper
+## Milestone 4 — P1/P2: Backup & portability ✅ (2026-10-20)
 
-- `cursormemo backup` / `restore` wrapper around the plain-file store:
-  timestamped archives, integrity manifest (sha256), restore preview,
-  selective restore, index rebuild via engine.
-- Optional scheduled local backups (cron/Task Scheduler templates).
+- [x] Round-trip verified end-to-end (fresh-dir restore, hash-identical
+      wiki, search-correct) — see TEST_PLAN results.
+- [x] Index rebuild from canonical files verified (`reindex` after db
+      deletion). Corrupted-backup failure mode verified clean.
+- [x] Wrapper shipped: `tools/cm-backup.sh` (backup/verify/preview/restore
+      with sha256 sidecar + the documented `auth enable` step).
+- [ ] Selective restore — engine restores whole snapshots; page-level
+      recovery already exists via git checkpoints + `restore-page`.
+      Scheduled backups = run the wrapper from cron/Task Scheduler.
 
 ## Milestone 5 — P2: Project intelligence + more agents
 
