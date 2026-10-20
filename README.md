@@ -52,6 +52,30 @@ curl -fsSL https://cursormemo.funapp.live/install.sh | sh
 ai-memory uninstall --apply
 ```
 
+## Version 2.0 — Secure Installer
+
+Installer v2.0 (engine: **ai-memory v3.1.1**, pinned). What's new:
+
+- **Pinned + verified** — the upstream installer script is checked against its
+  published SHA-256 before it runs; the binary archive is verified the same
+  way by the upstream script. No floating "latest", no unverified piping.
+- **Config backup first** — existing `~/.cursor/mcp.json` / `hooks.json` are
+  copied to `~/.cursormemo/backups/<timestamp>/` before setup.
+- **Modes** (bash): default install · `--update` · `--repair` · `--uninstall`
+  (memory is kept) · `--uninstall --purge` (memory deleted, explicit confirm)
+  · `--dry-run` · `--version`. PowerShell mirrors these as `-Update`,
+  `-Repair`, `-Uninstall`, `-Purge`, `-DryRun`.
+- **Download-then-review** — instead of piping:
+  `curl -fsSL https://cursormemo.funapp.live/install.sh -o install.sh`,
+  read it, then `bash install.sh`.
+- **Tested** — 16/16 sandbox assertions pass on Linux (fresh install,
+  idempotent re-run, repair, checksum-tamper abort, uninstall preserves
+  memory, purge). Windows `install.ps1` is statically reviewed; a real
+  Windows-machine run is still an open verification item.
+
+Docs: `docs/ARCHITECTURE.md` · `docs/FEATURE_GAP_ANALYSIS.md` ·
+`docs/SECURITY.md` · `docs/IMPLEMENTATION_PLAN.md` · `docs/TEST_PLAN.md`
+
 ## License
 
 - ဒီ ထုပ်ပိုးမှု (installer + လမ်းညွှန်): MIT
