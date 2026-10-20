@@ -53,7 +53,7 @@ or plausible upstream, not yet re-verified by us · **MISSING** = not present.
 |---|---|---|
 | Bounded context injection (handoff brief, on-demand recall) | EXISTS | Core upstream design. |
 | Markdown as canonical, portable store; index rebuildable | EXISTS | By upstream design. |
-| Backup/export/import UX, restore preview, scheduled backups | PARTIAL | **Upstream already ships `backup` / `restore` / `export-okf` / `reindex`** (found in milestone 2 CLI audit). Milestone 4 shrinks to: verify round-trip integrity + add the CursorMemo wrapper (scheduling, preview) only where real gaps remain. |
+| Backup/export/import UX, restore preview, scheduled backups | EXISTS + wrapper | **Round-trip VERIFIED in milestone 4:** backup → restore into a fresh data dir → wiki SHA-256 hashes identical → search correct after the one manual step (`ai-memory auth enable` — backups deliberately exclude credentials). Reindex-from-wiki verified (db deleted → rebuilt, 3 pages). Corrupted (truncated) backup fails cleanly via a staging dir, no partial data. `export-okf` produces a clean portable bundle. CursorMemo wrapper `tools/cm-backup.sh` adds timestamped backups + .sha256 sidecar + verify/preview + auto-starting the server for backup (the engine's backup API needs it running). Scheduled backups = call the wrapper from cron/Task Scheduler (documented, not built-in). |
 | Project intelligence (health warnings, bug KB views) | MISSING (as product surface) | Data exists in the wiki; views depend on the Phase 4 mapping. P2. |
 
 ## Phase 8 — Website & DX
