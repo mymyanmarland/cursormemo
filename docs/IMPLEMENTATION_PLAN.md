@@ -35,12 +35,17 @@ the v1 happy path; docs shipped in-repo.
       `export-okf` / `reindex` — milestone 4 rescoped to verification +
       thin wrapper.
 
-## Milestone 3 — P1: Dashboard mapping, then (only if gaps are real) extension
+## Milestone 3 — P1: Dashboard mapping + minimal companion ✅ (2026-10-20)
 
-- Page-by-page map of the upstream `/web` dashboard against the Phase 4 spec.
-- If gaps are real: smallest possible CursorMemo-side companion (read-only
-  first), reusing engine data/APIs — never a fork of the dashboard.
-- Task & Decision views only from recorded data; inferred items labelled.
+- [x] Page-by-page map of the upstream `/web` dashboard against Phase 4 —
+      `docs/DASHBOARD_MAP.md` (two independent live crawls agree).
+- [x] Gaps confirmed narrow: Timeline, Task view, Decision Log, Myanmar
+      localization. Dashboard itself is deliberately read-only; no fork.
+- [x] Companion built: `tools/cm-views.py` — bilingual static views
+      (Tasks / Decision Log / Timeline + counts) generated from the local
+      wiki, recorded data only. Verified on sandbox data; sample live.
+- [ ] Deferred: Overview+ live status (last capture, hook/MCP status) via
+      `/api/v1`/CLI — later milestone.
 
 ## Milestone 4 — P1/P2: Backup & portability wrapper
 
