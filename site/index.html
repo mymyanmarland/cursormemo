@@ -10,144 +10,196 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Myanmar:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#070a16; --bg2:#0c1122; --panel:#101830; --panel2:#141d3a; --line:#26315c;
-    --text:#f2f4ff; --muted:#a8b1d6; --gold:#e8c15a; --gold2:#f7dd8f; --gold-dim:rgba(232,193,90,.12);
-    --ok:#41e6a4; --bad:#ff7a7a; --radius:16px;
+    --bg:#05070f; --line:rgba(148,163,255,.16);
+    --text:#f4f6ff; --muted:#a9b2d8;
+    --gold:#eec25e; --gold2:#f9e29b;
+    --glass:rgba(18,24,50,.55);
+    --ok:#41e6a4; --bad:#ff8f8f;
+    --r:18px;
     --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Serif Myanmar", sans-serif;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.75}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.8;overflow-x:hidden}
   .mm{font-family:"Noto Serif Myanmar", system-ui, sans-serif}
   a{color:var(--gold2)}
-  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+  /* ambient orbs */
+  .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+  .orb.o1{width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle,#31449e 0%,transparent 70%)}
+  .orb.o2{width:460px;height:460px;right:-120px;top:12%;background:radial-gradient(circle,rgba(238,194,94,.5) 0%,transparent 70%)}
+  .orb.o3{width:560px;height:560px;left:28%;bottom:-220px;background:radial-gradient(circle,#1d2a6e 0%,transparent 70%)}
+
+  /* ---------- topbar ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-mark{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#f9e29b 0%,#d99a1f 60%,#8a5b00 100%);display:flex;align-items:center;justify-content:center;font-size:25px;box-shadow:0 8px 30px rgba(238,194,94,.4), inset 0 1px 0 rgba(255,255,255,.5)}
+  .logo-name{font-size:23px;font-weight:800;letter-spacing:.02em}
+  .logo-name span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .top-links{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);padding:8px 16px;border-radius:999px;text-decoration:none;color:var(--text);font-size:14px;transition:.15s}
+  .pill:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-1px)}
 
   /* ---------- hero ---------- */
-  .hero{position:relative;overflow:hidden;background:
-    radial-gradient(900px 420px at 85% -80px, rgba(232,193,90,.16), transparent 60%),
-    radial-gradient(800px 500px at 8% 0, rgba(64,90,220,.28), transparent 55%),
-    linear-gradient(180deg,#0d1430 0%, var(--bg) 100%);
-    border-bottom:1px solid var(--line)}
-  .hero-in{padding:56px 0 44px}
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-  .logo{display:flex;align-items:center;gap:12px}
-  .logo-mark{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#b8860b);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 6px 24px rgba(232,193,90,.35)}
-  .logo-name{font-size:22px;font-weight:800;letter-spacing:.02em}
-  .logo-name span{color:var(--gold)}
-  .top-links{display:flex;gap:10px;flex-wrap:wrap}
-  .top-links a{border:1px solid var(--line);background:rgba(16,24,48,.6);padding:8px 15px;border-radius:999px;text-decoration:none;color:var(--text);font-size:14px}
-  .top-links a:hover{border-color:var(--gold);color:var(--gold2)}
-  h1{font-size:clamp(30px,5.4vw,50px);line-height:1.45;margin:34px 0 8px;font-weight:900}
-  h1 .accent{color:var(--gold)}
-  .lead{font-size:clamp(16px,2.2vw,19px);color:var(--muted);max-width:820px;margin:0 0 26px}
-  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch;margin-bottom:26px}
-  .cmdbox{flex:1;min-width:280px;display:flex;align-items:center;gap:10px;background:#05070f;border:1px solid var(--gold);border-radius:12px;padding:12px 14px}
-  .cmdbox code{flex:1;font-family:ui-monospace,Consolas,monospace;font-size:14.5px;color:var(--ok);white-space:nowrap;overflow-x:auto}
-  .copy{border:none;background:var(--gold);color:#221a02;font-weight:700;border-radius:9px;padding:9px 16px;cursor:pointer;font-family:var(--font);font-size:14px;white-space:nowrap}
-  .copy:hover{background:var(--gold2)}
-  .stats{display:flex;gap:12px;flex-wrap:wrap}
-  .stat{background:rgba(16,24,48,.72);border:1px solid var(--line);border-radius:12px;padding:12px 18px;min-width:130px}
-  .stat b{display:block;font-size:22px;color:var(--gold2);line-height:1.2}
-  .stat span{font-size:13px;color:var(--muted)}
+  .hero{text-align:center;padding:64px 0 46px;position:relative}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(238,194,94,.45);background:rgba(238,194,94,.08);backdrop-filter:blur(10px);border-radius:999px;padding:8px 18px;font-size:14px;color:var(--gold2);letter-spacing:.06em}
+  .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  h1{font-size:clamp(30px,5.6vw,54px);line-height:1.5;margin:26px 0 10px;font-weight:900}
+  h1 .grad{background:linear-gradient(92deg,#f9e29b 10%,#eec25e 45%,#c98f1b 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:clamp(15.5px,2.1vw,18.5px);color:var(--muted);max-width:800px;margin:0 auto 30px}
+
+  .install-card{max-width:720px;margin:0 auto;background:var(--glass);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(16px);padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08)}
+  .install-card .lbl{font-size:14px;color:var(--gold2);margin-bottom:12px;letter-spacing:.05em}
+  .cmdrow{display:flex;gap:10px;align-items:stretch}
+  .cmdrow code{flex:1;display:flex;align-items:center;background:#04060d;border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-family:ui-monospace,Consolas,monospace;font-size:14.5px;color:var(--ok);overflow-x:auto;white-space:nowrap;text-align:left}
+  .copy{border:none;background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:800;border-radius:12px;padding:0 22px;cursor:pointer;font-family:var(--font);font-size:15px;white-space:nowrap;box-shadow:0 6px 20px rgba(238,194,94,.35);transition:.15s}
+  .copy:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(238,194,94,.45)}
+  .install-note{margin-top:12px;font-size:13.5px;color:var(--muted)}
+
+  /* flow visual */
+  .flow{display:flex;gap:0;justify-content:center;align-items:stretch;margin:44px auto 0;max-width:880px}
+  .fstep{flex:1;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:22px 16px;text-align:center;box-shadow:0 18px 44px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.07)}
+  .fstep .num{font-size:13px;font-weight:800;color:var(--gold2);letter-spacing:.14em;margin-bottom:6px}
+  .fstep .em{font-size:34px;margin:4px 0 8px}
+  .fstep h3{margin:0 0 6px;font-size:17px;font-weight:900}
+  .fstep p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+  .farrow{align-self:center;padding:0 10px;font-size:26px;color:var(--gold);flex:none}
 
   /* ---------- tabs ---------- */
-  .tabbar{position:sticky;top:0;z-index:20;background:rgba(7,10,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .tabbar{position:sticky;top:0;z-index:20;background:rgba(5,7,15,.85);backdrop-filter:blur(12px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:44px}
   .tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
-  .tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:9px 20px;font-size:15.5px;cursor:pointer;font-family:"Noto Serif Myanmar",system-ui,sans-serif;font-weight:700;white-space:nowrap;transition:.15s}
+  .tab{border:1px solid var(--line);background:rgba(18,24,50,.5);color:var(--muted);border-radius:999px;padding:9px 22px;font-size:16px;cursor:pointer;font-family:"Noto Serif Myanmar",system-ui,sans-serif;font-weight:700;white-space:nowrap;transition:.18s;flex:none}
   .tab:hover{color:var(--text);border-color:var(--gold)}
-  .tab.active{background:var(--gold);color:#221a02;border-color:var(--gold)}
-  .page{display:none;padding:38px 0 60px}
-  .page.active{display:block;animation:fade .25s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .tab.active{background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;border-color:transparent;box-shadow:0 6px 22px rgba(238,194,94,.35)}
+  .page{display:none;padding:40px 0 64px}
+  .page.active{display:block;animation:fade .28s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;font-weight:900}
-  .sub{color:var(--muted);margin:0 0 26px;max-width:780px}
+  h2 .grad{background:linear-gradient(92deg,#f9e29b,#eec25e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);margin:0 0 26px;max-width:800px}
 
-  /* ---------- cards & grids ---------- */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
-  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-  .card .icon{font-size:28px;line-height:1;margin-bottom:10px}
+  /* ---------- glass cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+  .card{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:24px;box-shadow:0 16px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);transition:.2s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(238,194,94,.5);box-shadow:0 22px 50px rgba(0,0,0,.45),0 0 30px rgba(238,194,94,.12)}
+  .card .icon{font-size:30px;line-height:1;margin-bottom:12px}
   .card h3{margin:0 0 8px;font-size:18px;font-weight:900}
   .card p{margin:0;color:var(--muted);font-size:15.5px}
-  .vs-bad{border-top:4px solid var(--bad)}
-  .vs-good{border-top:4px solid var(--ok)}
-  .vs h3 .tag{font-size:12px;padding:3px 10px;border-radius:999px;vertical-align:middle;margin-left:8px}
-  .tag-bad{background:rgba(255,122,122,.14);color:var(--bad)}
-  .tag-good{background:rgba(65,230,164,.14);color:var(--ok)}
-  ul.tick{list-style:none;margin:12px 0 0;padding:0}
-  ul.tick li{padding:7px 0 7px 30px;position:relative;color:var(--muted);font-size:15.5px;border-bottom:1px dashed rgba(38,49,92,.7)}
+  .vs h3 .tag{font-size:12px;padding:3px 12px;border-radius:999px;vertical-align:middle;margin-left:10px;letter-spacing:.06em}
+  .tag-bad{background:rgba(255,143,143,.15);color:var(--bad)}
+  .tag-good{background:rgba(65,230,164,.15);color:var(--ok)}
+  .vs-bad{border-top:3px solid var(--bad)}
+  .vs-good{border-top:3px solid var(--ok)}
+  ul.tick{list-style:none;margin:14px 0 0;padding:0}
+  ul.tick li{padding:8px 0 8px 32px;position:relative;color:var(--muted);font-size:15.5px;border-bottom:1px dashed rgba(148,163,255,.14)}
   ul.tick li:last-child{border-bottom:none}
-  ul.tick li::before{position:absolute;left:2px;top:7px}
-  ul.tick.bad li::before{content:"✕";color:var(--bad);font-weight:700}
-  ul.tick.good li::before{content:"✓";color:var(--ok);font-weight:700}
+  ul.tick li::before{position:absolute;left:4px;top:8px;font-weight:800}
+  ul.tick.bad li::before{content:"✕";color:var(--bad)}
+  ul.tick.good li::before{content:"✓";color:var(--ok)}
 
-  /* ---------- chat mock ---------- */
-  .chat{background:#05070f;border:1px solid var(--line);border-radius:var(--radius);padding:20px;max-width:760px}
-  .chat-head{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+  /* chat mock */
+  .chat{background:rgba(4,6,13,.85);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:22px;max-width:780px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .chat-head{display:flex;align-items:center;gap:8px;margin-bottom:18px}
   .dot{width:11px;height:11px;border-radius:50%}
   .chat-title{margin-left:8px;color:var(--muted);font-size:13.5px}
-  .msg{border-radius:12px;padding:12px 16px;margin:0 0 12px;font-size:15.5px;line-height:1.7}
-  .msg .who{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;letter-spacing:.03em}
-  .msg.user{background:var(--panel2);border:1px solid var(--line)}
-  .msg.ai{background:rgba(232,193,90,.07);border:1px solid rgba(232,193,90,.35)}
+  .msg{border-radius:14px;padding:14px 18px;margin:0 0 12px;font-size:15.5px;line-height:1.75}
+  .msg:last-child{margin-bottom:0}
+  .msg .who{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;letter-spacing:.04em}
+  .msg.user{background:rgba(28,36,72,.6);border:1px solid var(--line)}
+  .msg.ai{background:rgba(238,194,94,.08);border:1px solid rgba(238,194,94,.35)}
   .msg.ai .who{color:var(--gold2)}
 
-  /* ---------- steps ---------- */
-  .steps{display:grid;gap:14px;counter-reset:step}
-  .step{display:flex;gap:16px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:20px;align-items:flex-start}
-  .step-num{flex:none;width:42px;height:42px;border-radius:50%;background:var(--gold);color:#221a02;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center}
+  /* steps */
+  .steps{display:grid;gap:14px}
+  .step{display:flex;gap:18px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:22px;align-items:flex-start;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+  .step-num{flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(238,194,94,.35)}
   .step h3{margin:2px 0 6px;font-size:17.5px;font-weight:900}
   .step p{margin:0;color:var(--muted);font-size:15.5px}
   .step code{font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14px}
 
-  /* ---------- faq ---------- */
+  /* faq */
   .faq{display:grid;gap:12px}
-  .qa{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .qa{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:22px 24px}
   .qa h3{margin:0 0 8px;font-size:17px;font-weight:900;color:var(--gold2)}
   .qa p{margin:0;color:var(--muted);font-size:15.5px}
-  .qa code{font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14px;background:#05070f;padding:2px 8px;border-radius:6px;border:1px solid var(--line)}
+  .qa code{font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14px;background:#04060d;padding:2px 8px;border-radius:6px;border:1px solid var(--line)}
 
-  .note{background:var(--gold-dim);border:1px solid rgba(232,193,90,.4);border-radius:var(--radius);padding:18px 22px;color:var(--text);font-size:15.5px}
-  footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--muted);font-size:14px;line-height:1.8}
-  .mt{margin-top:28px}
+  .note{background:rgba(238,194,94,.07);border:1px solid rgba(238,194,94,.35);border-radius:var(--r);padding:20px 24px;color:var(--text);font-size:15.5px;backdrop-filter:blur(10px)}
+  footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:14px;line-height:1.8;position:relative;z-index:1}
+  .mt{margin-top:30px}
+
   @media (max-width:640px){
-    .hero-in{padding:38px 0 32px}
-    .cmdbox{min-width:100%}
-    .stat{flex:1;min-width:100px}
+    .hero{padding:44px 0 36px}
+    .cmdrow{flex-direction:column}
+    .cmdrow code{white-space:normal;word-break:break-all;font-size:13px}
+    .copy{padding:13px 0;width:100%}
+    .flow{flex-direction:column;gap:12px}
+    .farrow{transform:rotate(90deg);padding:2px 0}
+    .step{padding:18px}
+    .tab{font-size:14.5px;padding:8px 16px}
+    .topbar{padding:14px 0}
+    .logo-mark{width:42px;height:42px}
+    .logo-name{font-size:20px}
   }
 </style>
 </head>
 <body>
+<div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-mark">🧠</div>
+      <div class="logo-name">Cursor<span>Memo</span></div>
+    </div>
+    <div class="top-links">
+      <a class="pill" href="https://github.com/mymyanmarland/cursormemo">GitHub</a>
+      <a class="pill" href="https://github.com/akitaonrails/ai-memory">Upstream: ai-memory</a>
+    </div>
+  </div>
+</div>
 
 <header class="hero">
-  <div class="wrap hero-in">
-    <div class="topbar">
-      <div class="logo">
-        <div class="logo-mark">🧠</div>
-        <div class="logo-name">Cursor<span>Memo</span></div>
-      </div>
-      <div class="top-links">
-        <a href="https://github.com/mymyanmarland/cursormemo">GitHub</a>
-        <a href="https://github.com/akitaonrails/ai-memory">Upstream: ai-memory</a>
-      </div>
-    </div>
+  <div class="wrap">
+    <span class="badge"><span class="pulse"></span><span class="mm">Funapp · Open Source · MIT · အခမဲ့</span></span>
+    <h1 class="mm">Cursor ရဲ့ AI ကို<br><span class="grad">မှတ်ဉာဏ်ကောင်း</span> စေတဲ့ နည်းလမ်း</h1>
+    <p class="lead mm">Cursor ထဲမှာ code ရေးတိုင်း သုံးတဲ့ AI က စကားပြောခန်း တစ်ခု ပြီးတိုင်း အကုန် မေ့သွားတတ်တယ်။ CursorMemo က မှတ်စုစာအုပ်တစ်အုပ်လို အလုပ်လုပ်တယ် — မင်း ဘာလုပ်ခဲ့လဲ၊ ဘာအဆင်ပြေလဲ၊ ဘာကျန်နေသေးလဲ ဆိုတာ တိတ်တိတ်လေး မှတ်ထားပေးတယ်။ နောက်တစ်ခါ project ဖွင့်တာနဲ့ AI က အဲ့ဒီမှတ်စုကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။</p>
 
-    <h1 class="mm">Cursor ရဲ့ AI ကို<br><span class="accent">မှတ်ဉာဏ်ကောင်း</span> စေတဲ့ နည်းလမ်း</h1>
-    <p class="lead mm">Cursor ထဲမှာ code ရေးတိုင်း သုံးတဲ့ AI က စကားပြောခန်း တစ်ခု ပြီးတိုင်း အကုန် မေ့သွားတတ်တယ်။ CursorMemo က မှတ်စုစာအုပ်တစ်အုပ်လို အလုပ်လုပ်တယ် — မင်း ဘာလုပ်ခဲ့လဲ၊ ဘာအဆင်ပြေလဲ၊ ဘာကျန်နေသေးလဲ ဆိုတာ တိတ်တိတ်လေး မှတ်ထားပေးတယ်။ နောက်တစ်ခါ project ဖွင့်တာနဲ့ AI က အဲ့ဒီမှတ်စုကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။ မင်း အစကနေ ပြန်ရှင်းပြစရာ မလိုတော့ဘူး။</p>
-
-    <div class="hero-cta">
-      <div class="cmdbox">
+    <div class="install-card">
+      <div class="lbl mm">⬇️ WINDOWS — PowerShell မှာ ဒါလေး တစ်ကြောင်း run ရုံပဲ</div>
+      <div class="cmdrow">
         <code id="cmd-hero">irm https://cursormemo.funapp.live/install.ps1 | iex</code>
         <button class="copy" data-target="cmd-hero">Copy</button>
       </div>
+      <div class="install-note mm">Admin အခွင့် မလို · Cursor တစ်ခုတည်းနဲ့ ချိတ်တယ် · ဖျက်ချင်ရင် <code style="color:var(--ok)">ai-memory uninstall --apply</code></div>
     </div>
 
-    <div class="stats">
-      <div class="stat"><b>11,000+</b><span class="mm">GitHub star ရထားတဲ့ program</span></div>
-      <div class="stat"><b>4,000+</b><span class="mm">ကြိမ်ရေး commit — အမြဲ update ဖြစ်</span></div>
-      <div class="stat"><b>132</b><span class="mm">အကြိမ် version အသစ် ထုတ်ထား</span></div>
-      <div class="stat"><b>MIT</b><span class="mm">Open source — အခမဲ့ သုံးနိုင်</span></div>
+    <div class="flow">
+      <div class="fstep">
+        <div class="num">STEP 1</div>
+        <div class="em">💻</div>
+        <h3 class="mm">အလုပ်လုပ်</h3>
+        <p class="mm">Cursor ထဲမှာ ပုံမှန်အတိုင်း code ရေး။ ဘာမှ အထူး လုပ်စရာ မလို။</p>
+      </div>
+      <div class="farrow">→</div>
+      <div class="fstep">
+        <div class="num">STEP 2</div>
+        <div class="em">📝</div>
+        <h3 class="mm">မှတ်စုမှတ်</h3>
+        <p class="mm">ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ — မှတ်စုက တိတ်တိတ်လေး ရေးသွားတယ်။</p>
+      </div>
+      <div class="farrow">→</div>
+      <div class="fstep">
+        <div class="num">STEP 3</div>
+        <div class="em">🚀</div>
+        <h3 class="mm">ဆက်လုပ်</h3>
+        <p class="mm">နောက် session စတာနဲ့ AI က မှတ်စု ဖတ်ပြီးသား — ချက်ချင်း ဆက်လုပ်တယ်။</p>
+      </div>
     </div>
   </div>
 </header>
@@ -165,7 +217,7 @@
 
   <!-- ============ TAB: HOME ============ -->
   <section class="page active" id="page-home">
-    <h2 class="mm">မသုံးခင် နဲ့ သုံးပြီးနောက် — ဘာကွာလဲ</h2>
+    <h2 class="mm">မသုံးခင် နဲ့ သုံးပြီးနောက် — <span class="grad">ဘာကွာလဲ</span></h2>
     <p class="sub mm">ဒီ tool မရှိခင်က Cursor ရဲ့ AI နဲ့ အလုပ်လုပ်ရတဲ့ ပုံစံ နဲ့ ရှိပြီးနောက် ပုံစံကို နှိုင်းယှဉ်ကြည့်ပါ။</p>
 
     <div class="grid2">
@@ -189,7 +241,7 @@
       </div>
     </div>
 
-    <h2 class="mm mt">ဘယ်လို အလုပ်လုပ်လဲ — နမူနာ မြင်ကွင်း</h2>
+    <h2 class="mm mt">ဘယ်လို အလုပ်လုပ်လဲ — <span class="grad">နမူနာ မြင်ကွင်း</span></h2>
     <p class="sub mm">မနေ့က login စနစ် ပြင်နေတာ တစ်ဝက်မှာ ရပ်ခဲ့တယ် ဆိုပါစို့။ ဒီနေ့ Cursor ဖွင့်ပြီး chat အသစ် စတာနဲ့ ဒီလို ဖြစ်နေမယ် — မင်း ဘာမှ ကြိုပြောစရာ မလိုဘူး။</p>
 
     <div class="chat">
@@ -203,14 +255,14 @@
       <div class="msg ai mm"><span class="who">Cursor AI (မှတ်စု ဖတ်ပြီးသား)</span>မနေ့က login စနစ် ပြင်နေတာ ဒီနေရာ ရောက်နေပြီ — password စစ်တဲ့ အပိုင်း ပြီးသွားပြီ၊ token သက်တမ်း စမ်းတဲ့ အပိုင်း ကျန်နေတယ်။ မနေ့က စမ်းခဲ့တဲ့ နည်းတစ်ခု အဆင်မပြေခဲ့လို့ အဲ့ဒီနည်းကို ထပ်မသုံးဘဲ တခြားနည်းနဲ့ ဆက်လုပ်မယ်။</div>
     </div>
 
-    <h2 class="mm mt">အဓိက လုပ်ဆောင်ချက်များ</h2>
+    <h2 class="mm mt">အဓိက <span class="grad">လုပ်ဆောင်ချက်များ</span></h2>
     <p class="sub mm">ဘာကြောင့် ဒီ tool က အသုံးဝင်လဲ ဆိုတာ အချက် ၆ ချက်နဲ့ ရှင်းပြထားတယ်။</p>
 
     <div class="grid">
       <div class="card">
         <div class="icon">✍️</div>
         <h3 class="mm">အလိုအလျောက် မှတ်တယ်</h3>
-        <p class="mm">မင်း ဘာမှ နှိပ်စရာ မလိုဘူး။ အလုပ်လုပ်နေတိုင်း — ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ၊ ဘာဆုံး�ဖြတ်ခဲ့လဲ — မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်။</p>
+        <p class="mm">မင်း ဘာမှ နှိပ်စရာ မလိုဘူး။ အလုပ်လုပ်နေတိုင်း — ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ၊ ဘာဆုံးဖြတ်ခဲ့လဲ — မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်။</p>
       </div>
       <div class="card">
         <div class="icon">🤝</div>
@@ -242,7 +294,7 @@
 
   <!-- ============ TAB: INSTALL ============ -->
   <section class="page" id="page-install">
-    <h2 class="mm">တင်နည်း — တစ်မိနစ်ပဲ ကြာတယ်</h2>
+    <h2 class="mm">တင်နည်း — <span class="grad">တစ်မိနစ်ပဲ ကြာတယ်</span></h2>
     <p class="sub mm">စက်တစ်လုံးမှာ တစ်ခါတည်း တင်ရင် ရပြီ။ Project တိုင်းမှာ ထပ်တင်စရာ မလိုဘူး။ Admin အခွင့်လည်း မလိုဘူး။</p>
 
     <h2 class="mm" style="font-size:21px">Windows သုံးသူများ</h2>
@@ -256,9 +308,9 @@
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <div style="flex:1">
+        <div style="flex:1;min-width:0">
           <h3 class="mm">ဒီ command ကို ကူးယူ</h3>
-          <div class="cmdbox" style="margin-top:8px">
+          <div class="cmdrow" style="margin-top:10px">
             <code id="cmd-win">irm https://cursormemo.funapp.live/install.ps1 | iex</code>
             <button class="copy" data-target="cmd-win">Copy</button>
           </div>
@@ -282,7 +334,7 @@
 
     <h2 class="mm mt" style="font-size:21px">Linux / macOS / WSL2 သုံးသူများ</h2>
     <p class="sub mm" style="margin-bottom:14px">Terminal ဖွင့်ပြီး ဒီ command ကို paste လုပ်ပြီး Enter နှိပ်ပါ။</p>
-    <div class="cmdbox" style="max-width:760px">
+    <div class="cmdrow" style="max-width:760px">
       <code id="cmd-sh">curl -fsSL https://cursormemo.funapp.live/install.sh | sh</code>
       <button class="copy" data-target="cmd-sh">Copy</button>
     </div>
@@ -292,7 +344,7 @@
 
   <!-- ============ TAB: USAGE ============ -->
   <section class="page" id="page-usage">
-    <h2 class="mm">သုံးနည်း — ဘာမှ အထူး မလိုဘူး</h2>
+    <h2 class="mm">သုံးနည်း — <span class="grad">ဘာမှ အထူး မလိုဘူး</span></h2>
     <p class="sub mm">တင်ပြီးရင် ပုံမှန်အတိုင်း code ရေးရုံပဲ။ မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်၊ သူ့ဘာသာ ပြန်ဖတ်တယ်။</p>
 
     <h2 class="mm" style="font-size:21px">ပထမဆုံး စမ်းကြည့်ရန်</h2>
@@ -308,7 +360,7 @@
         <div class="step-num">2</div>
         <div>
           <h3 class="mm">AI ကို ဒီလို မေးကြည့်</h3>
-          <p><code>"What do you remember about this project?"</code></p>
+          <p><code style="font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14.5px">"What do you remember about this project?"</code></p>
           <p class="mm">AI က မှတ်စုထဲကနေ ပြန်ဖြေရင် ချိတ်ဆက်မှု အဆင်ပြေပြီ။</p>
         </div>
       </div>
@@ -325,29 +377,29 @@
     <p class="sub mm" style="margin-bottom:14px">Cursor chat ထဲမှာ ဒီလိုစာတွေ ရိုက်ပြီး မှတ်စုကို ပြန်ခေါ်လို့ရတယ်။</p>
     <div class="grid">
       <div class="card">
-        <h3><code style="color:var(--ok)">"Where did we leave off?"</code></h3>
+        <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Where did we leave off?"</code></h3>
         <p class="mm">ဘယ်နေရာမှာ ရပ်ခဲ့လဲ — နောက်ဆုံး လုပ်ခဲ့တာနဲ့ ကျန်နေတာကို ပြန်ပြောပြတယ်။</p>
       </div>
       <div class="card">
-        <h3><code style="color:var(--ok)">"Have we discussed X?"</code></h3>
+        <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Have we discussed X?"</code></h3>
         <p class="mm">X အကြောင်း အရင်က ဆွေးနွေးဖူးလား — မှတ်စုထဲကနေ ရှာပြီး ပြန်ပြောပြတယ်။</p>
       </div>
       <div class="card">
-        <h3><code style="color:var(--ok)">"Catch me up"</code></h3>
+        <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Catch me up"</code></h3>
         <p class="mm">အကျဉ်းချုပ် ပြောပြ — ရက်အနည်းငယ် နားပြီးမှ ပြန်လာရင် အခြေအနေကို အတိုချုပ် ရှင်းပြတယ်။</p>
       </div>
       <div class="card">
-        <h3><code style="color:var(--ok)">"Save context for the next session"</code></h3>
+        <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Save context for the next session"</code></h3>
         <p class="mm">နောက် session အတွက် မှတ်စု ရေးထား — ရပ်ခါနီးမှာ နောက်လူ (နောက် AI) အတွက် မှတ်စု လက်ဆင့်ကမ်း ရေးပေးတယ်။</p>
       </div>
     </div>
 
-    <div class="note mm mt">📖 <b>မှတ်စုတွေကို ကိုယ်တိုင် ကြည့်ချင်ရင်</b> — Browser ထဲမှာ <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> ကို ဖွင့်ပါ။ မှတ်စု စာမျက်နှာတွေကို စာအုပ်လို ဖတ်လို့ရတယ်။ (Username နေရာမှာ ကြိုက်တာ ထည့်၊ password နေရာမှာ စက်ထဲက token ဖိုင်ထဲက စာသားကို ထည့်ရတယ် — အသေးစိတ်ကို GitHub README မှာ ရေးထားတယ်။)</div>
+    <div class="note mm mt">📖 <b>မှတ်စုတွေကို ကိုယ်တိုင် ကြည့်ချင်ရင်</b> — Browser ထဲမှာ <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> ကို ဖွင့်ပါ။ မှတ်စု စာမျက်နှာတွေကို စာအုပ်လို ဖတ်လို့ရတယ်။</div>
   </section>
 
   <!-- ============ TAB: FAQ ============ -->
   <section class="page" id="page-faq">
-    <h2 class="mm">မေးလေ့ရှိသောမေးခွန်းများ</h2>
+    <h2 class="mm">မေးလေ့ရှိသော<span class="grad">မေးခွန်းများ</span></h2>
     <p class="sub mm">လူတွေ အမေးများဆုံး မေးခွန်းတွေကို စုပြီး ရှင်းပြထားတယ်။</p>
 
     <div class="faq">
