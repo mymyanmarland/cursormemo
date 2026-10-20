@@ -29,16 +29,16 @@ or plausible upstream, not yet re-verified by us · **MISSING** = not present.
 |---|---|---|
 | Capture → sanitize → consolidate → recall pipeline | EXISTS | Upstream core; zero-LLM by default. |
 | Per-project isolation | EXISTS | Scoped by project directory path; `.ai-memory.toml` for monorepo routing. |
-| Structured categories (decisions, bugs, failed approaches…) | VERIFY | Consolidation produces typed observations upstream; the exact category taxonomy of the mission brief must be mapped against the engine's wiki schema before CursorMemo claims it. Milestone 2 task. |
-| Duplicate detection / importance scoring / lifecycle | VERIFY | Engine has consolidation logic; scoring specifics unverified by us. |
-| Hybrid/semantic search | VERIFY | FTS5 is verified. Semantic retrieval is optional upstream capability — benchmark before enabling (mission rule). |
+| Structured categories (decisions, bugs, failed approaches…) | EXISTS | **Mapped + verified in milestone 2** — kind (fact/rule/decision/gotcha) × tier (working/episodic/semantic/procedural) × tags covers all 10; see `docs/MEMORY_MODEL.md`. |
+| Duplicate detection / importance scoring / lifecycle | EXISTS | `lint` (stale/duplicates, optional LLM contradiction), `curator`, `forget-sweep` retention with pinned-page exemption; git checkpoints give version history + `restore-page`. |
+| Hybrid/semantic search | EXISTS (upstream) / NOT ENABLED | Embeddings exist (`page_embeddings`, `embed`). Milestone-2 benchmark: FTS5 hit@1 = 100% at 21 ms median — semantic layer not justified yet; revisit at 1k+ pages. |
 
 ## Phase 3 — Session continuity
 
 | Capability | Status | Notes |
 |---|---|---|
 | Automatic handoff brief at session start | EXISTS | Verified conceptually + sandbox wiring; real-Cursor behaviour needs the owner's Windows machine (still the open e2e item). |
-| Recovery from interrupted sessions | VERIFY | Engine design (session-end consolidation + durable Markdown) suggests resilience; crash-path test is in TEST_PLAN. |
+| Recovery from interrupted sessions | EXISTS | **Crash-tested in milestone 2:** `kill -9` + restart → store fully intact and searchable. |
 
 ## Phase 4 — Dashboard
 
@@ -53,7 +53,7 @@ or plausible upstream, not yet re-verified by us · **MISSING** = not present.
 |---|---|---|
 | Bounded context injection (handoff brief, on-demand recall) | EXISTS | Core upstream design. |
 | Markdown as canonical, portable store; index rebuildable | EXISTS | By upstream design. |
-| Backup/export/import UX, restore preview, scheduled backups | PARTIAL/MISSING | Store is plain files (trivially backable), but productised backup flows are a CursorMemo-side opportunity (wrapper CLI) — P2. |
+| Backup/export/import UX, restore preview, scheduled backups | PARTIAL | **Upstream already ships `backup` / `restore` / `export-okf` / `reindex`** (found in milestone 2 CLI audit). Milestone 4 shrinks to: verify round-trip integrity + add the CursorMemo wrapper (scheduling, preview) only where real gaps remain. |
 | Project intelligence (health warnings, bug KB views) | MISSING (as product surface) | Data exists in the wiki; views depend on the Phase 4 mapping. P2. |
 
 ## Phase 8 — Website & DX
