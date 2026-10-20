@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CursorMemo — Cursor ရဲ့ မှတ်ဉာဏ်</title>
 <meta name="description" content="Cursor ရဲ့ AI ကို မှတ်ဉာဏ်ကောင်းစေတဲ့ တစ်ချက် install — မနေ့က ဘာလုပ်ခဲ့လဲ၊ ဘာကျန်နေသေးလဲ AI က အမြဲ မှတ်မိနေမယ်။">
+<link rel="icon" type="image/png" href="logo.png">
+<meta property="og:image" content="https://cursormemo.funapp.live/logo-wide.png">
+<meta property="og:title" content="CursorMemo — Memory for Cursor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Myanmar:wght@700;900&display=swap" rel="stylesheet">
@@ -12,7 +15,7 @@
   :root{
     --bg:#05070f; --line:rgba(148,163,255,.16);
     --text:#f4f6ff; --muted:#a9b2d8;
-    --gold:#eec25e; --gold2:#f9e29b;
+    --gold:#22d3ee; --gold2:#7dd3fc;
     --glass:rgba(18,24,50,.55);
     --ok:#41e6a4; --bad:#ff8f8f;
     --r:18px;
@@ -31,37 +34,37 @@
   .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
   .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
   .orb.o1{width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle,#31449e 0%,transparent 70%)}
-  .orb.o2{width:460px;height:460px;right:-120px;top:12%;background:radial-gradient(circle,rgba(238,194,94,.5) 0%,transparent 70%)}
+  .orb.o2{width:460px;height:460px;right:-120px;top:12%;background:radial-gradient(circle,rgba(56,189,248,.5) 0%,transparent 70%)}
   .orb.o3{width:560px;height:560px;left:28%;bottom:-220px;background:radial-gradient(circle,#1d2a6e 0%,transparent 70%)}
 
   /* ---------- topbar ---------- */
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;flex-wrap:wrap}
   .logo{display:flex;align-items:center;gap:12px}
-  .logo-mark{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#f9e29b 0%,#d99a1f 60%,#8a5b00 100%);display:flex;align-items:center;justify-content:center;font-size:25px;box-shadow:0 8px 30px rgba(238,194,94,.4), inset 0 1px 0 rgba(255,255,255,.5)}
+  .logo-mark{width:48px;height:48px;border-radius:14px;background:#ffffff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 30px rgba(56,189,248,.35)}
   .logo-name{font-size:23px;font-weight:800;letter-spacing:.02em}
-  .logo-name span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo-name span{background:linear-gradient(90deg,#38bdf8,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
   .top-links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .pill{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);padding:8px 16px;border-radius:999px;text-decoration:none;color:var(--text);font-size:14px;transition:.15s;cursor:pointer;font-family:var(--font)}
   .pill:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-1px)}
   .langswitch{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--glass)}
   .langswitch button{border:none;background:transparent;color:var(--muted);padding:8px 14px;font-size:14px;cursor:pointer;font-family:var(--font)}
-  .langswitch button.on{background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:800}
+  .langswitch button.on{background:linear-gradient(135deg,#22d3ee,#38bdf8 45%,#a855f7);color:#06182b;font-weight:800}
 
   /* ---------- hero ---------- */
   .hero{text-align:center;padding:64px 0 46px;position:relative}
-  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(238,194,94,.45);background:rgba(238,194,94,.08);backdrop-filter:blur(10px);border-radius:999px;padding:8px 18px;font-size:14px;color:var(--gold2);letter-spacing:.06em}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(56,189,248,.45);background:rgba(56,189,248,.08);backdrop-filter:blur(10px);border-radius:999px;padding:8px 18px;font-size:14px;color:var(--gold2);letter-spacing:.06em}
   .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite;flex:none}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
   h1{font-size:clamp(30px,5.6vw,54px);line-height:1.5;margin:26px 0 10px;font-weight:900}
-  h1 .grad{background:linear-gradient(92deg,#f9e29b 10%,#eec25e 45%,#c98f1b 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .grad{background:linear-gradient(92deg,#22d3ee 5%,#38bdf8 45%,#a855f7 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .lead{font-size:clamp(15.5px,2.1vw,18.5px);color:var(--muted);max-width:800px;margin:0 auto 30px}
 
   .install-card{max-width:720px;margin:0 auto;background:var(--glass);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(16px);padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08)}
   .install-card .lbl{font-size:14px;color:var(--gold2);margin-bottom:12px;letter-spacing:.05em}
   .cmdrow{display:flex;gap:10px;align-items:stretch}
   .cmdrow code{flex:1;display:flex;align-items:center;background:#04060d;border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-family:ui-monospace,Consolas,monospace;font-size:14.5px;color:var(--ok);overflow-x:auto;white-space:nowrap;text-align:left}
-  .copy{border:none;background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:800;border-radius:12px;padding:0 22px;cursor:pointer;font-family:var(--font);font-size:15px;white-space:nowrap;box-shadow:0 6px 20px rgba(238,194,94,.35);transition:.15s}
-  .copy:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(238,194,94,.45)}
+  .copy{border:none;background:linear-gradient(135deg,#22d3ee,#38bdf8 45%,#a855f7);color:#06182b;font-weight:800;border-radius:12px;padding:0 22px;cursor:pointer;font-family:var(--font);font-size:15px;white-space:nowrap;box-shadow:0 6px 20px rgba(56,189,248,.35);transition:.15s}
+  .copy:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(56,189,248,.45)}
   .install-note{margin-top:12px;font-size:13.5px;color:var(--muted)}
   .install-note code{font-family:ui-monospace,Consolas,monospace;color:var(--ok)}
 
@@ -80,19 +83,19 @@
   .tabs::-webkit-scrollbar{display:none}
   .tab{border:1px solid var(--line);background:rgba(18,24,50,.5);color:var(--muted);border-radius:999px;padding:9px 22px;font-size:16px;cursor:pointer;font-family:var(--font);white-space:nowrap;transition:.18s;flex:none}
   .tab:hover{color:var(--text);border-color:var(--gold)}
-  .tab.active{background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;border-color:transparent;box-shadow:0 6px 22px rgba(238,194,94,.35)}
+  .tab.active{background:linear-gradient(135deg,#22d3ee,#38bdf8 45%,#a855f7);color:#06182b;border-color:transparent;box-shadow:0 6px 22px rgba(56,189,248,.35)}
   .page{display:none;padding:40px 0 64px}
   .page.active{display:block;animation:fade .28s ease}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;font-weight:900}
-  h2 .grad{background:linear-gradient(92deg,#f9e29b,#eec25e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2 .grad{background:linear-gradient(92deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
   .sub{color:var(--muted);margin:0 0 26px;max-width:800px}
 
   /* ---------- glass cards ---------- */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
   .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
   .card{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:24px;box-shadow:0 16px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);transition:.2s}
-  .card:hover{transform:translateY(-3px);border-color:rgba(238,194,94,.5);box-shadow:0 22px 50px rgba(0,0,0,.45),0 0 30px rgba(238,194,94,.12)}
+  .card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.5);box-shadow:0 22px 50px rgba(0,0,0,.45),0 0 30px rgba(56,189,248,.12)}
   .card .icon{font-size:30px;line-height:1;margin-bottom:12px}
   .card h3{margin:0 0 8px;font-size:18px;font-weight:900}
   .card p{margin:0;color:var(--muted);font-size:15.5px}
@@ -117,13 +120,13 @@
   .msg:last-child{margin-bottom:0}
   .msg .who{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;letter-spacing:.04em}
   .msg.user{background:rgba(28,36,72,.6);border:1px solid var(--line)}
-  .msg.ai{background:rgba(238,194,94,.08);border:1px solid rgba(238,194,94,.35)}
+  .msg.ai{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.35)}
   .msg.ai .who{color:var(--gold2)}
 
   /* steps */
   .steps{display:grid;gap:14px}
   .step{display:flex;gap:18px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);padding:22px;align-items:flex-start;box-shadow:0 16px 40px rgba(0,0,0,.35)}
-  .step-num{flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(238,194,94,.35)}
+  .step-num{flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#22d3ee,#38bdf8 45%,#a855f7);color:#06182b;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(56,189,248,.35)}
   .step h3{margin:2px 0 6px;font-size:17.5px;font-weight:900}
   .step p{margin:0;color:var(--muted);font-size:15.5px}
   .step code{font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14px}
@@ -135,7 +138,7 @@
   .qa p{margin:0;color:var(--muted);font-size:15.5px}
   .qa code{font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14px;background:#04060d;padding:2px 8px;border-radius:6px;border:1px solid var(--line)}
 
-  .note{background:rgba(238,194,94,.07);border:1px solid rgba(238,194,94,.35);border-radius:var(--r);padding:20px 24px;color:var(--text);font-size:15.5px;backdrop-filter:blur(10px)}
+  .note{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.35);border-radius:var(--r);padding:20px 24px;color:var(--text);font-size:15.5px;backdrop-filter:blur(10px)}
   footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:14px;line-height:1.8;position:relative;z-index:1}
   .mt{margin-top:30px}
 
@@ -160,7 +163,7 @@
 <div class="wrap">
   <div class="topbar">
     <div class="logo">
-      <div class="logo-mark">🧠</div>
+      <div class="logo-mark"><img src="logo.png" alt="CursorMemo logo" style="width:100%;height:100%;object-fit:cover"></div>
       <div class="logo-name">Cursor<span>Memo</span></div>
     </div>
     <div class="top-links">
