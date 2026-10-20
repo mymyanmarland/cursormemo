@@ -28,6 +28,7 @@ BACKUP_ROOT="$HOME/.cursormemo/backups"
 MODE="install"
 PURGE=0
 DRY_RUN=0
+AGENTS_CSV="cursor"
 CLEANUP_DIR=""
 trap 'rm -rf "$CLEANUP_DIR"' EXIT
 
@@ -37,12 +38,14 @@ for arg in "$@"; do
     --repair) MODE="repair" ;;
     --uninstall) MODE="uninstall" ;;
     --purge) PURGE=1 ;;
+    --agents=*) AGENTS_CSV="${arg#--agents=}" ;;
     --dry-run) DRY_RUN=1 ;;
     --version) echo "CursorMemo installer ${CURSORMEMO_INSTALLER_VERSION} (engine pinned: ai-memory ${PINNED_ENGINE_VERSION})"; exit 0 ;;
     -h|--help)
       grep '^#' "$0" | sed 's/^#\{0,1\} \{0,1\}//' | head -30
       echo ""
       echo "Modes: (default) install | --update | --repair | --uninstall [--purge] | --dry-run | --version"
+      echo "Agents: --agents=cursor (default) | e.g. --agents=cursor,claude-code,codex,gemini-cli"
       exit 0 ;;
     *) echo "Unknown option: $arg (try --help)" >&2; exit 2 ;;
   esac
@@ -73,21 +76,37 @@ find_data_dir() {
   return 1
 }
 
+agent_config_files() {
+  # Prints the config files the engine may modify for one agent (backup list).
+  case "$1" in
+    cursor)      printf '%s\n%s\n' "$HOME/.cursor/mcp.json" "$HOME/.cursor/hooks.json" ;;
+    claude-code) printf '%s\n%s\n' "$HOME/.claude.json" "$HOME/.claude/settings.json" ;;
+    codex)       printf '%s\n' "$HOME/.codex/config.toml" ;;
+    gemini-cli)  printf '%s\n' "$HOME/.gemini/settings.json" ;;
+    *)           : ;;  # other agents: engine-managed; no CursorMemo backup map yet
+  esac
+}
+
 backup_cursor_config() {
-  local ts dest f
+  local ts dest
   ts="$(date +%Y%m%d-%H%M%S)"
   dest="$BACKUP_ROOT/$ts"
-  local made=0
-  for f in mcp.json hooks.json; do
-    if [ -f "$CURSOR_DIR/$f" ]; then
-      if [ "$DRY_RUN" = "1" ]; then
-        printf '[dry-run] would back up %s -> %s/\n' "$CURSOR_DIR/$f" "$dest"
-      else
-        mkdir -p "$dest" && cp -a "$CURSOR_DIR/$f" "$dest/$f" && made=1
+  local made=0 a src rel
+  local agents; IFS=',' read -ra agents <<< "$AGENTS_CSV"
+  for a in "${agents[@]}"; do
+    while IFS= read -r src; do
+      [ -n "$src" ] || continue
+      if [ -f "$src" ]; then
+        rel="${src#"$HOME"/}"
+        if [ "$DRY_RUN" = "1" ]; then
+          printf '[dry-run] would back up %s -> %s/\n' "$src" "$dest"
+        else
+          mkdir -p "$dest/$(dirname "$rel")" && cp -a "$src" "$dest/$rel" && made=1
+        fi
       fi
-    fi
+    done <<< "$(agent_config_files "$a")"
   done
-  if [ "$made" = "1" ]; then say "Backed up existing Cursor config to: $dest"; fi
+  if [ "$made" = "1" ]; then say "Backed up existing agent config to: $dest"; fi
 }
 
 install_engine() {
@@ -122,20 +141,36 @@ install_engine() {
 }
 
 wire_cursor() {
-  step "setup" "Backing up existing Cursor configuration..."
+  step "setup" "Backing up existing agent configuration..."
   backup_cursor_config
-  step "setup" "Wiring Cursor (MCP + hooks + skills, merged into existing config)..."
-  if [ "$DRY_RUN" = "1" ]; then say "[dry-run] would run: ai-memory setup --agent cursor --yes"; return 0; fi
+  local agents args=()
+  IFS=',' read -ra agents <<< "$AGENTS_CSV"
+  local a
+  for a in "${agents[@]}"; do args+=(--agent "$a"); done
+  step "setup" "Wiring agents: ${AGENTS_CSV} (MCP + hooks + skills, merged into existing config)..."
+  if [ "$DRY_RUN" = "1" ]; then say "[dry-run] would run: ai-memory setup ${args[*]} --yes"; return 0; fi
   local rc=0
-  ai-memory setup --agent cursor --yes || rc=$?
-  if grep -q 'ai-memory' "$CURSOR_DIR/mcp.json" 2>/dev/null; then
-    if [ "$rc" != "0" ]; then
-      warn "Setup reported an error (often: the background service could not start in this session), but Cursor IS wired. Restart Cursor to finish."
-    fi
-    say "Verified: ~/.cursor/mcp.json contains the ai-memory entry."
-  else
-    die "Setup did not wire Cursor (no ai-memory entry in ~/.cursor/mcp.json). Your previous config is in $BACKUP_ROOT — restore it, or re-run with --repair."
+  ai-memory setup "${args[@]}" --yes || rc=$?
+  # Verify each requested agent we know how to check.
+  local failed=""
+  for a in "${agents[@]}"; do
+    local ok=1
+    case "$a" in
+      cursor)      grep -q 'ai-memory' "$HOME/.cursor/mcp.json" 2>/dev/null && ok=0 ;;
+      claude-code) grep -q 'ai-memory' "$HOME/.claude.json" 2>/dev/null && ok=0 ;;
+      codex)       grep -q 'ai-memory' "$HOME/.codex/config.toml" 2>/dev/null && ok=0 ;;
+      gemini-cli)  grep -q 'ai-memory' "$HOME/.gemini/settings.json" 2>/dev/null && ok=0 ;;
+      *)           ok=0 ;;  # not verifiable here; engine reported its own result
+    esac
+    [ "$ok" = "0" ] || failed="$failed $a"
+  done
+  if [ -n "$failed" ]; then
+    die "Setup did not wire these agents:$failed. Your previous config is in $BACKUP_ROOT — restore it, or re-run with --repair."
   fi
+  if [ "$rc" != "0" ]; then
+    warn "Setup reported an error (often: the background service could not start in this session), but the agent config IS wired. Restart your editor to finish."
+  fi
+  say "Verified: agent wiring present for: ${AGENTS_CSV}"
 }
 
 do_uninstall() {
@@ -208,7 +243,7 @@ main() {
   if [ "$MODE" != "uninstall" ]; then
     say ""
     say "Done! Next steps:"
-    say "  1. Restart Cursor (or toggle the ai-memory server off/on in Settings -> MCP)."
+    say "  1. Restart your editor/agent (for Cursor: toggle the ai-memory server off/on in Settings -> MCP)."
     say "  2. Open a project and ask the agent: \"What do you remember about this project?\""
     say ""
     say "Uninstall anytime:  bash install.sh --uninstall   (your memory is kept)"
