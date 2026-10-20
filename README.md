@@ -72,6 +72,14 @@ Installer v2.0 (engine: **ai-memory v3.1.1**, pinned). What's new:
   idempotent re-run, repair, checksum-tamper abort, uninstall preserves
   memory, purge). Windows `install.ps1` is statically reviewed; a real
   Windows-machine run is still an open verification item.
+- **More agents** — Cursor stays the default, but the engine supports 20+.
+  Verified by CursorMemo in a sandbox: `--agents=cursor,claude-code,codex`
+  (also `gemini-cli`). Other agents work through the same engine setup but
+  are not yet CursorMemo-verified.
+- **Companion tools** — `tools/cm-views.py` (bilingual Tasks / Decision Log
+  / Timeline / Project Intelligence page generated from your local wiki)
+  and `tools/cm-backup.sh` (timestamped, checksum-verified backups with
+  preview + restore). See `docs/`.
 
 Docs: `docs/ARCHITECTURE.md` · `docs/FEATURE_GAP_ANALYSIS.md` ·
 `docs/SECURITY.md` · `docs/IMPLEMENTATION_PLAN.md` · `docs/TEST_PLAN.md`
