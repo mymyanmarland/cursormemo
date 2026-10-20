@@ -54,12 +54,30 @@ no systemd in the VM):
   exactly. Live-agent handoff brief (real Cursor hooks) remains the open
   real-machine item.
 
+## Results — Milestone 4 (2026-10-20)
+
+Backup & portability, all against the real engine in sandboxes:
+
+- **Round-trip:** `ai-memory backup` (54 KiB tarball: wiki + db + config) →
+  restore into a FRESH data dir → **wiki .md SHA-256 hashes identical** →
+  server starts after `ai-memory auth enable` (backups exclude credentials
+  by design — documented in the wrapper) → searches return the correct
+  pages.
+- **Index reconstruction:** db/ deleted → `ai-memory reindex` rebuilt it
+  from the wiki (3 pages / 2 projects) → search correct.
+- **Corruption:** truncated tarball → restore fails with a clear error via
+  a `.restore-staging-*` dir; **zero partial pages** in the target.
+- **Export:** `export-okf` produced a clean portable bundle (index.md +
+  project-relative page paths).
+- **Wrapper `tools/cm-backup.sh`:** backup (+ .sha256 sidecar, auto-starts
+  the server when needed) / verify (good file passes; 1-byte-tampered copy
+  rejected with SHA-256 MISMATCH, exit 1) / preview (page listing without
+  restoring) — all PASS.
+
 ## Later milestones
 
 - Milestone 2: scripted two-session continuity test + interruption recovery;
   retrieval precision benchmark on a seeded corpus.
 - Milestone 3: dashboard mapping checklist executed against the live `/web`
   UI; any companion UI ships with its own smoke tests.
-- Milestone 4: backup → wipe → restore round-trip equality check (file-level
-  hash comparison), restore-preview accuracy, corrupted-index rebuild.
 - Standing: every engine pin bump re-runs T1–T10 plus the continuity test.
