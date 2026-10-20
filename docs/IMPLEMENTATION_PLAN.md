@@ -59,12 +59,17 @@ the v1 happy path; docs shipped in-repo.
       recovery already exists via git checkpoints + `restore-page`.
       Scheduled backups = run the wrapper from cron/Task Scheduler.
 
-## Milestone 5 — P2: Project intelligence + more agents
+## Milestone 5 — P2: Project intelligence + more agents ✅ (2026-10-20)
 
-- Project status / bug-KB / health views from recorded memories (facts vs
-  suggestions labelled).
-- Additional MCP-agent presets (Claude Code, Codex…) shipped only after the
-  same sandbox + real-machine verification Cursor received.
+- [x] Project Intelligence in `tools/cm-views.py` — per-project status,
+      bug knowledge base, deterministic health notes (record-derived,
+      labelled; no inference).
+- [x] Agent presets verified in sandbox for claude-code + codex; installer
+      `--agents=` option ships them (default remains cursor-only).
+      Remaining agents are engine-supported, documented as unverified by
+      CursorMemo until individually tested.
+- [ ] Real-machine verification (any agent) still requires the owner's
+      Windows PC — the mission's standing open item.
 
 ## Standing rules
 
