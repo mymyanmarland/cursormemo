@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="my" data-lang="mm">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,8 @@
   .mm{font-family:"Noto Serif Myanmar", system-ui, sans-serif}
   a{color:var(--gold2)}
   .wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+  html[data-lang="mm"] .L-en{display:none!important}
+  html[data-lang="en"] .L-mm{display:none!important}
 
   /* ambient orbs */
   .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -38,14 +40,17 @@
   .logo-mark{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#f9e29b 0%,#d99a1f 60%,#8a5b00 100%);display:flex;align-items:center;justify-content:center;font-size:25px;box-shadow:0 8px 30px rgba(238,194,94,.4), inset 0 1px 0 rgba(255,255,255,.5)}
   .logo-name{font-size:23px;font-weight:800;letter-spacing:.02em}
   .logo-name span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .top-links{display:flex;gap:10px;flex-wrap:wrap}
-  .pill{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);padding:8px 16px;border-radius:999px;text-decoration:none;color:var(--text);font-size:14px;transition:.15s}
+  .top-links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .pill{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);padding:8px 16px;border-radius:999px;text-decoration:none;color:var(--text);font-size:14px;transition:.15s;cursor:pointer;font-family:var(--font)}
   .pill:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-1px)}
+  .langswitch{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--glass)}
+  .langswitch button{border:none;background:transparent;color:var(--muted);padding:8px 14px;font-size:14px;cursor:pointer;font-family:var(--font)}
+  .langswitch button.on{background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:800}
 
   /* ---------- hero ---------- */
   .hero{text-align:center;padding:64px 0 46px;position:relative}
   .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(238,194,94,.45);background:rgba(238,194,94,.08);backdrop-filter:blur(10px);border-radius:999px;padding:8px 18px;font-size:14px;color:var(--gold2);letter-spacing:.06em}
-  .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite}
+  .badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s infinite;flex:none}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
   h1{font-size:clamp(30px,5.6vw,54px);line-height:1.5;margin:26px 0 10px;font-weight:900}
   h1 .grad{background:linear-gradient(92deg,#f9e29b 10%,#eec25e 45%,#c98f1b 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -58,6 +63,7 @@
   .copy{border:none;background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;font-weight:800;border-radius:12px;padding:0 22px;cursor:pointer;font-family:var(--font);font-size:15px;white-space:nowrap;box-shadow:0 6px 20px rgba(238,194,94,.35);transition:.15s}
   .copy:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(238,194,94,.45)}
   .install-note{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .install-note code{font-family:ui-monospace,Consolas,monospace;color:var(--ok)}
 
   /* flow visual */
   .flow{display:flex;gap:0;justify-content:center;align-items:stretch;margin:44px auto 0;max-width:880px}
@@ -72,7 +78,7 @@
   .tabbar{position:sticky;top:0;z-index:20;background:rgba(5,7,15,.85);backdrop-filter:blur(12px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:44px}
   .tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
-  .tab{border:1px solid var(--line);background:rgba(18,24,50,.5);color:var(--muted);border-radius:999px;padding:9px 22px;font-size:16px;cursor:pointer;font-family:"Noto Serif Myanmar",system-ui,sans-serif;font-weight:700;white-space:nowrap;transition:.18s;flex:none}
+  .tab{border:1px solid var(--line);background:rgba(18,24,50,.5);color:var(--muted);border-radius:999px;padding:9px 22px;font-size:16px;cursor:pointer;font-family:var(--font);white-space:nowrap;transition:.18s;flex:none}
   .tab:hover{color:var(--text);border-color:var(--gold)}
   .tab.active{background:linear-gradient(135deg,#f9e29b,#d99a1f);color:#241a02;border-color:transparent;box-shadow:0 6px 22px rgba(238,194,94,.35)}
   .page{display:none;padding:40px 0 64px}
@@ -158,6 +164,10 @@
       <div class="logo-name">Cursor<span>Memo</span></div>
     </div>
     <div class="top-links">
+      <span class="langswitch" role="group" aria-label="Language">
+        <button id="lang-mm" class="on">မြန်မာ</button>
+        <button id="lang-en">EN</button>
+      </span>
       <a class="pill" href="https://github.com/mymyanmarland/cursormemo">GitHub</a>
       <a class="pill" href="https://github.com/akitaonrails/ai-memory">Upstream: ai-memory</a>
     </div>
@@ -166,39 +176,41 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="badge"><span class="pulse"></span><span class="mm">Funapp · Open Source · MIT · အခမဲ့</span></span>
-    <h1 class="mm">Cursor ရဲ့ AI ကို<br><span class="grad">မှတ်ဉာဏ်ကောင်း</span> စေတဲ့ နည်းလမ်း</h1>
-    <p class="lead mm">Cursor ထဲမှာ code ရေးတိုင်း သုံးတဲ့ AI က စကားပြောခန်း တစ်ခု ပြီးတိုင်း အကုန် မေ့သွားတတ်တယ်။ CursorMemo က မှတ်စုစာအုပ်တစ်အုပ်လို အလုပ်လုပ်တယ် — မင်း ဘာလုပ်ခဲ့လဲ၊ ဘာအဆင်ပြေလဲ၊ ဘာကျန်နေသေးလဲ ဆိုတာ တိတ်တိတ်လေး မှတ်ထားပေးတယ်။ နောက်တစ်ခါ project ဖွင့်တာနဲ့ AI က အဲ့ဒီမှတ်စုကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။</p>
+    <span class="badge"><span class="pulse"></span><span class="L-mm mm">Funapp · Open Source · MIT · အခမဲ့</span><span class="L-en">Funapp · Open Source · MIT · Free</span></span>
+    <h1 class="L-mm mm">Cursor ရဲ့ AI ကို<br><span class="grad">မှတ်ဉာဏ်ကောင်း</span> စေတဲ့ နည်းလမ်း</h1>
+    <h1 class="L-en">Give Cursor's AI a<br><span class="grad">real memory</span></h1>
+    <p class="lead L-mm mm">Cursor ထဲမှာ code ရေးတိုင်း သုံးတဲ့ AI က စကားပြောခန်း တစ်ခု ပြီးတိုင်း အကုန် မေ့သွားတတ်တယ်။ CursorMemo က မှတ်စုစာအုပ်တစ်အုပ်လို အလုပ်လုပ်တယ် — မင်း ဘာလုပ်ခဲ့လဲ၊ ဘာအဆင်ပြေလဲ၊ ဘာကျန်နေသေးလဲ ဆိုတာ တိတ်တိတ်လေး မှတ်ထားပေးတယ်။ နောက်တစ်ခါ project ဖွင့်တာနဲ့ AI က အဲ့ဒီမှတ်စုကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။</p>
+    <p class="lead L-en">The AI you code with in Cursor forgets everything when a chat ends. CursorMemo works like a notebook — it quietly records what you did, what worked, and what's still open. The next time you open the project, the AI has already read that notebook. No more re-explaining from scratch.</p>
 
     <div class="install-card">
-      <div class="lbl mm">⬇️ WINDOWS — PowerShell မှာ ဒါလေး တစ်ကြောင်း run ရုံပဲ</div>
+      <div class="lbl"><span class="L-mm mm">⬇️ WINDOWS — PowerShell မှာ ဒါလေး တစ်ကြောင်း run ရုံပဲ</span><span class="L-en">⬇️ WINDOWS — just run this one line in PowerShell</span></div>
       <div class="cmdrow">
         <code id="cmd-hero">irm https://cursormemo.funapp.live/install.ps1 | iex</code>
         <button class="copy" data-target="cmd-hero">Copy</button>
       </div>
-      <div class="install-note mm">Admin အခွင့် မလို · Cursor တစ်ခုတည်းနဲ့ ချိတ်တယ် · ဖျက်ချင်ရင် <code style="color:var(--ok)">ai-memory uninstall --apply</code></div>
+      <div class="install-note"><span class="L-mm mm">Admin အခွင့် မလို · Cursor တစ်ခုတည်းနဲ့ ချိတ်တယ် · ဖျက်ချင်ရင် <code>ai-memory uninstall --apply</code></span><span class="L-en">No admin rights needed · Wires to Cursor only · Remove anytime with <code>ai-memory uninstall --apply</code></span></div>
     </div>
 
     <div class="flow">
       <div class="fstep">
         <div class="num">STEP 1</div>
         <div class="em">💻</div>
-        <h3 class="mm">အလုပ်လုပ်</h3>
-        <p class="mm">Cursor ထဲမှာ ပုံမှန်အတိုင်း code ရေး။ ဘာမှ အထူး လုပ်စရာ မလို။</p>
+        <h3 class="L-mm mm">အလုပ်လုပ်</h3><h3 class="L-en">Work</h3>
+        <p class="L-mm mm">Cursor ထဲမှာ ပုံမှန်အတိုင်း code ရေး။ ဘာမှ အထူး လုပ်စရာ မလို။</p><p class="L-en">Code as usual inside Cursor. Nothing special to do.</p>
       </div>
       <div class="farrow">→</div>
       <div class="fstep">
         <div class="num">STEP 2</div>
         <div class="em">📝</div>
-        <h3 class="mm">မှတ်စုမှတ်</h3>
-        <p class="mm">ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ — မှတ်စုက တိတ်တိတ်လေး ရေးသွားတယ်။</p>
+        <h3 class="L-mm mm">မှတ်စုမှတ်</h3><h3 class="L-en">It takes notes</h3>
+        <p class="L-mm mm">ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ — မှတ်စုက တိတ်တိတ်လေး ရေးသွားတယ်။</p><p class="L-en">What you did, what error you hit — the notebook writes itself.</p>
       </div>
       <div class="farrow">→</div>
       <div class="fstep">
         <div class="num">STEP 3</div>
         <div class="em">🚀</div>
-        <h3 class="mm">ဆက်လုပ်</h3>
-        <p class="mm">နောက် session စတာနဲ့ AI က မှတ်စု ဖတ်ပြီးသား — ချက်ချင်း ဆက်လုပ်တယ်။</p>
+        <h3 class="L-mm mm">ဆက်လုပ်</h3><h3 class="L-en">Continue</h3>
+        <p class="L-mm mm">နောက် session စတာနဲ့ AI က မှတ်စု ဖတ်ပြီးသား — ချက်ချင်း ဆက်လုပ်တယ်။</p><p class="L-en">Next session starts with the notebook already read — it just continues.</p>
       </div>
     </div>
   </div>
@@ -206,11 +218,11 @@
 
 <nav class="tabbar">
   <div class="wrap tabs" role="tablist">
-    <button class="tab active" data-page="home">ပင်မစာမျက်နှာ</button>
-    <button class="tab" data-page="install">တင်နည်း</button>
-    <button class="tab" data-page="usage">သုံးနည်း</button>
-    <button class="tab" data-page="tech">နည်းပညာ</button>
-    <button class="tab" data-page="faq">မေးလေ့ရှိသောမေးခွန်းများ</button>
+    <button class="tab active" data-page="home"><span class="L-mm mm">ပင်မစာမျက်နှာ</span><span class="L-en">Home</span></button>
+    <button class="tab" data-page="install"><span class="L-mm mm">တင်နည်း</span><span class="L-en">Install</span></button>
+    <button class="tab" data-page="usage"><span class="L-mm mm">သုံးနည်း</span><span class="L-en">Usage</span></button>
+    <button class="tab" data-page="tech"><span class="L-mm mm">နည်းပညာ</span><span class="L-en">Technology</span></button>
+    <button class="tab" data-page="faq"><span class="L-mm mm">မေးလေ့ရှိသောမေးခွန်းများ</span><span class="L-en">FAQ</span></button>
   </div>
 </nav>
 
@@ -218,99 +230,130 @@
 
   <!-- ============ TAB: HOME ============ -->
   <section class="page active" id="page-home">
-    <h2 class="mm">မသုံးခင် နဲ့ သုံးပြီးနောက် — <span class="grad">ဘာကွာလဲ</span></h2>
-    <p class="sub mm">ဒီ tool မရှိခင်က Cursor ရဲ့ AI နဲ့ အလုပ်လုပ်ရတဲ့ ပုံစံ နဲ့ ရှိပြီးနောက် ပုံစံကို နှိုင်းယှဉ်ကြည့်ပါ။</p>
+    <h2 class="L-mm mm">မသုံးခင် နဲ့ သုံးပြီးနောက် — <span class="grad">ဘာကွာလဲ</span></h2>
+    <h2 class="L-en">Before vs after — <span class="grad">what changes?</span></h2>
+    <p class="sub L-mm mm">ဒီ tool မရှိခင်က Cursor ရဲ့ AI နဲ့ အလုပ်လုပ်ရတဲ့ ပုံစံ နဲ့ ရှိပြီးနောက် ပုံစံကို နှိုင်းယှဉ်ကြည့်ပါ။</p>
+    <p class="sub L-en">Compare how working with Cursor's AI feels without this tool — and with it.</p>
 
     <div class="grid2">
       <div class="card vs vs-bad">
-        <h3 class="mm">မသုံးခင်<span class="tag tag-bad">BEFORE</span></h3>
-        <ul class="tick bad mm">
-          <li>မနေ့က ဘာလုပ်ခဲ့လဲ ပြန်မေးရင် AI က မမှတ်မိဘူး</li>
-          <li>Chat အသစ် ဖွင့်တိုင်း အစကနေ ပြန်ရှင်းပြရတယ်</li>
-          <li>စမ်းပြီး အဆင်မပြေခဲ့တဲ့ နည်းကို AI က ထပ်စမ်းမိတယ်</li>
-          <li>Project တစ်ခု ရပ်ပြီး ပြန်လာရင် ဘယ်ရောက်နေလဲ ကိုယ်တိုင် ပြန်ရှာရတယ်</li>
+        <h3><span class="L-mm mm">မသုံးခင်</span><span class="L-en">Without</span><span class="tag tag-bad">BEFORE</span></h3>
+        <ul class="tick bad">
+          <span class="L-mm mm">
+            <li>မနေ့က ဘာလုပ်ခဲ့လဲ ပြန်မေးရင် AI က မမှတ်မိဘူး</li>
+            <li>Chat အသစ် ဖွင့်တိုင်း အစကနေ ပြန်ရှင်းပြရတယ်</li>
+            <li>စမ်းပြီး အဆင်မပြေခဲ့တဲ့ နည်းကို AI က ထပ်စမ်းမိတယ်</li>
+            <li>Project တစ်ခု ရပ်ပြီး ပြန်လာရင် ဘယ်ရောက်နေလဲ ကိုယ်တိုင် ပြန်ရှာရတယ်</li>
+          </span>
+          <span class="L-en">
+            <li>Ask what you did yesterday — the AI remembers nothing</li>
+            <li>Every new chat means explaining everything from scratch</li>
+            <li>The AI retries approaches that already failed</li>
+            <li>Come back to a paused project and you must re-figure where you left off</li>
+          </span>
         </ul>
       </div>
       <div class="card vs vs-good">
-        <h3 class="mm">သုံးပြီးနောက်<span class="tag tag-good">AFTER</span></h3>
-        <ul class="tick good mm">
-          <li>မနေ့က ဘယ်မှာ ရပ်ခဲ့လဲ AI က ကိုယ်တိုင် သိနေတယ်</li>
-          <li>ပြန်ရှင်းပြစရာ မလိုဘူး — chat စတာနဲ့ ဆက်လုပ်တယ်</li>
-          <li>အဆင်မပြေခဲ့တဲ့ နည်းတွေကို မှတ်ထားလို့ ထပ်မစမ်းဘူး</li>
-          <li>Project တိုင်းရဲ့ မှတ်စုက သီးခြားစီ — ရောမသွားဘူး</li>
+        <h3><span class="L-mm mm">သုံးပြီးနောက်</span><span class="L-en">With CursorMemo</span><span class="tag tag-good">AFTER</span></h3>
+        <ul class="tick good">
+          <span class="L-mm mm">
+            <li>မနေ့က ဘယ်မှာ ရပ်ခဲ့လဲ AI က ကိုယ်တိုင် သိနေတယ်</li>
+            <li>ပြန်ရှင်းပြစရာ မလိုဘူး — chat စတာနဲ့ ဆက်လုပ်တယ်</li>
+            <li>အဆင်မပြေခဲ့တဲ့ နည်းတွေကို မှတ်ထားလို့ ထပ်မစမ်းဘူး</li>
+            <li>Project တိုင်းရဲ့ မှတ်စုက သီးခြားစီ — ရောမသွားဘူး</li>
+          </span>
+          <span class="L-en">
+            <li>The AI itself knows where you left off yesterday</li>
+            <li>No re-explaining — a new chat just continues the work</li>
+            <li>Failed approaches are remembered, so they're never retried</li>
+            <li>Each project has its own notebook — nothing gets mixed up</li>
+          </span>
         </ul>
       </div>
     </div>
 
-    <h2 class="mm mt">ဘယ်လို အလုပ်လုပ်လဲ — <span class="grad">နမူနာ မြင်ကွင်း</span></h2>
-    <p class="sub mm">မနေ့က login စနစ် ပြင်နေတာ တစ်ဝက်မှာ ရပ်ခဲ့တယ် ဆိုပါစို့။ ဒီနေ့ Cursor ဖွင့်ပြီး chat အသစ် စတာနဲ့ ဒီလို ဖြစ်နေမယ် — မင်း ဘာမှ ကြိုပြောစရာ မလိုဘူး။</p>
+    <h2 class="L-mm mm mt">ဘယ်လို အလုပ်လုပ်လဲ — <span class="grad">နမူနာ မြင်ကွင်း</span></h2>
+    <h2 class="L-en mt">See it in action — <span class="grad">an example</span></h2>
+    <p class="sub L-mm mm">မနေ့က login စနစ် ပြင်နေတာ တစ်ဝက်မှာ ရပ်ခဲ့တယ် ဆိုပါစို့။ ဒီနေ့ Cursor ဖွင့်ပြီး chat အသစ် စတာနဲ့ ဒီလို ဖြစ်နေမယ် — မင်း ဘာမှ ကြိုပြောစရာ မလိုဘူး။</p>
+    <p class="sub L-en">Say you stopped halfway through fixing the login system yesterday. Today you open Cursor and start a new chat — and it looks like this, without you saying a word first.</p>
 
     <div class="chat">
       <div class="chat-head">
         <span class="dot" style="background:#ff5f57"></span>
         <span class="dot" style="background:#febc2e"></span>
         <span class="dot" style="background:#28c840"></span>
-        <span class="chat-title">Cursor — Chat အသစ်</span>
+        <span class="chat-title">Cursor — <span class="L-mm mm">Chat အသစ်</span><span class="L-en">New chat</span></span>
       </div>
-      <div class="msg user mm"><span class="who">မင်း</span>ဒီနေ့ ဘာဆက်လုပ်ရမလဲ</div>
-      <div class="msg ai mm"><span class="who">Cursor AI (မှတ်စု ဖတ်ပြီးသား)</span>မနေ့က login စနစ် ပြင်နေတာ ဒီနေရာ ရောက်နေပြီ — password စစ်တဲ့ အပိုင်း ပြီးသွားပြီ၊ token သက်တမ်း စမ်းတဲ့ အပိုင်း ကျန်နေတယ်။ မနေ့က စမ်းခဲ့တဲ့ နည်းတစ်ခု အဆင်မပြေခဲ့လို့ အဲ့ဒီနည်းကို ထပ်မသုံးဘဲ တခြားနည်းနဲ့ ဆက်လုပ်မယ်။</div>
+      <div class="msg user"><span class="who L-mm mm">မင်း</span><span class="who L-en">You</span><span class="L-mm mm">ဒီနေ့ ဘာဆက်လုပ်ရမလဲ</span><span class="L-en">What should we continue with today?</span></div>
+      <div class="msg ai"><span class="who L-mm mm">Cursor AI (မှတ်စု ဖတ်ပြီးသား)</span><span class="who L-en">Cursor AI (notebook already read)</span><span class="L-mm mm">မနေ့က login စနစ် ပြင်နေတာ ဒီနေရာ ရောက်နေပြီ — password စစ်တဲ့ အပိုင်း ပြီးသွားပြီ၊ token သက်တမ်း စမ်းတဲ့ အပိုင်း ကျန်နေတယ်။ မနေ့က စမ်းခဲ့တဲ့ နည်းတစ်ခု အဆင်မပြေခဲ့လို့ အဲ့ဒီနည်းကို ထပ်မသုံးဘဲ တခြားနည်းနဲ့ ဆက်လုပ်မယ်။</span><span class="L-en">Yesterday's login fix is at this point — the password-check part is done, the token-expiry test is still open. One approach you tried yesterday didn't work, so I won't retry it; I'll continue with a different one.</span></div>
     </div>
 
-    <h2 class="mm mt">အဓိက <span class="grad">လုပ်ဆောင်ချက်များ</span></h2>
-    <p class="sub mm">ဘာကြောင့် ဒီ tool က အသုံးဝင်လဲ ဆိုတာ အချက် ၆ ချက်နဲ့ ရှင်းပြထားတယ်။</p>
+    <h2 class="L-mm mm mt">အဓိက <span class="grad">လုပ်ဆောင်ချက်များ</span></h2>
+    <h2 class="L-en mt">Key <span class="grad">features</span></h2>
+    <p class="sub L-mm mm">ဘာကြောင့် ဒီ tool က အသုံးဝင်လဲ ဆိုတာ အချက် ၆ ချက်နဲ့ ရှင်းပြထားတယ်။</p>
+    <p class="sub L-en">Six reasons this tool is worth having.</p>
 
     <div class="grid">
       <div class="card">
         <div class="icon">✍️</div>
-        <h3 class="mm">အလိုအလျောက် မှတ်တယ်</h3>
-        <p class="mm">မင်း ဘာမှ နှိပ်စရာ မလိုဘူး။ အလုပ်လုပ်နေတိုင်း — ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ၊ ဘာဆုံးဖြတ်ခဲ့လဲ — မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်။</p>
+        <h3 class="L-mm mm">အလိုအလျောက် မှတ်တယ်</h3><h3 class="L-en">Automatic notes</h3>
+        <p class="L-mm mm">မင်း ဘာမှ နှိပ်စရာ မလိုဘူး။ အလုပ်လုပ်နေတိုင်း — ဘာလုပ်ခဲ့လဲ၊ ဘာ error တွေ့လဲ၊ ဘာဆုံးဖြတ်ခဲ့လဲ — မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်။</p>
+        <p class="L-en">You never press anything. As you work — what you did, what error you hit, what you decided — the notebook writes itself.</p>
       </div>
       <div class="card">
         <div class="icon">🤝</div>
-        <h3 class="mm">နောက် session က ဆက်ကောက်တယ်</h3>
-        <p class="mm">Session တစ်ခု ပြီးတိုင်း မှတ်စုကို အကျဉ်းချုပ် ရေးထားပေးတယ်။ နောက် session စတာနဲ့ AI က အဲ့ဒါကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။</p>
+        <h3 class="L-mm mm">နောက် session က ဆက်ကောက်တယ်</h3><h3 class="L-en">Next session picks it up</h3>
+        <p class="L-mm mm">Session တစ်ခု ပြီးတိုင်း မှတ်စုကို အကျဉ်းချုပ် ရေးထားပေးတယ်။ နောက် session စတာနဲ့ AI က အဲ့ဒါကို ကြိုဖတ်ထားပြီးသား ဖြစ်နေတယ်။</p>
+        <p class="L-en">At the end of each session a summary is written down. The next session starts with the AI having already read it.</p>
       </div>
       <div class="card">
         <div class="icon">🗂️</div>
-        <h3 class="mm">Project တိုင်း သီးခြား မှတ်စု</h3>
-        <p class="mm">မှတ်စုတွေကို project တစ်ခုချင်းစီ အလိုက် folder လမ်းကြောင်းနဲ့ ခွဲသိမ်းတယ်။ Project အသစ် ဖွင့်တိုင်း မှတ်စု အသစ်က အလိုအလျောက် စတယ်။</p>
+        <h3 class="L-mm mm">Project တိုင်း သီးခြား မှတ်စု</h3><h3 class="L-en">A notebook per project</h3>
+        <p class="L-mm mm">မှတ်စုတွေကို project တစ်ခုချင်းစီ အလိုက် folder လမ်းကြောင်းနဲ့ ခွဲသိမ်းတယ်။ Project အသစ် ဖွင့်တိုင်း မှတ်စု အသစ်က အလိုအလျောက် စတယ်။</p>
+        <p class="L-en">Notes are kept separately per project, scoped by folder path. A new project automatically starts a fresh notebook.</p>
       </div>
       <div class="card">
         <div class="icon">🔑</div>
-        <h3 class="mm">API key မလိုဘူး</h3>
-        <p class="mm">အခြေခံ ပုံစံက အင်တာနက်က AI ဝန်ဆောင်မှုကို မသုံးဘူး။ Key မရှိ၊ အကောင့် မရှိလည်း အပြည့်အဝ အလုပ်လုပ်တယ်။</p>
+        <h3 class="L-mm mm">API key မလိုဘူး</h3><h3 class="L-en">No API key needed</h3>
+        <p class="L-mm mm">အခြေခံ ပုံစံက အင်တာနက်က AI ဝန်ဆောင်မှုကို မသုံးဘူး။ Key မရှိ၊ အကောင့် မရှိလည်း အပြည့်အဝ အလုပ်လုပ်တယ်။</p>
+        <p class="L-en">The default setup uses no online AI service at all. No key, no account — it works fully offline after install.</p>
       </div>
       <div class="card">
         <div class="icon">🏠</div>
-        <h3 class="mm">Data က ကိုယ့်စက်ထဲပဲ</h3>
-        <p class="mm">မှတ်စုတွေ အကုန် မင်းရဲ့ ကွန်ပျူတာထဲမှာပဲ သိမ်းတယ်။ အပြင်က server ကို ဘာမှ မပို့ဘူး။ ကိုယ့် code အကြောင်း သူများ မသိဘူး။</p>
+        <h3 class="L-mm mm">Data က ကိုယ့်စက်ထဲပဲ</h3><h3 class="L-en">Your data stays home</h3>
+        <p class="L-mm mm">မှတ်စုတွေ အကုန် မင်းရဲ့ ကွန်ပျူတာထဲမှာပဲ သိမ်းတယ်။ အပြင်က server ကို ဘာမှ မပို့ဘူး။ ကိုယ့် code အကြောင်း သူများ မသိဘူး။</p>
+        <p class="L-en">Every note is stored on your own computer. Nothing is sent to an outside server — nobody learns about your code.</p>
       </div>
       <div class="card">
         <div class="icon">📖</div>
-        <h3 class="mm">စာအုပ်လို ပြန်ဖတ်လို့ရတယ်</h3>
-        <p class="mm">မှတ်စုတွေက ရိုးရိုး စာဖိုင်တွေ (markdown)။ ကိုယ်တိုင် ဖွင့်ဖတ်လို့ရတယ်၊ ပြင်လို့ရတယ်၊ ရှာလို့ရတယ်။ ပိတ်ထားတဲ့ ပုံစံ မဟုတ်ဘူး။</p>
+        <h3 class="L-mm mm">စာအုပ်လို ပြန်ဖတ်လို့ရတယ်</h3><h3 class="L-en">Readable like a book</h3>
+        <p class="L-mm mm">မှတ်စုတွေက ရိုးရိုး စာဖိုင်တွေ (markdown)။ ကိုယ်တိုင် ဖွင့်ဖတ်လို့ရတယ်၊ ပြင်လို့ရတယ်၊ ရှာလို့ရတယ်။ ပိတ်ထားတဲ့ ပုံစံ မဟုတ်ဘူး။</p>
+        <p class="L-en">Notes are plain text files (markdown). Open them, read them, edit them, search them — nothing is locked away.</p>
       </div>
     </div>
   </section>
 
   <!-- ============ TAB: INSTALL ============ -->
   <section class="page" id="page-install">
-    <h2 class="mm">တင်နည်း — <span class="grad">တစ်မိနစ်ပဲ ကြာတယ်</span></h2>
-    <p class="sub mm">စက်တစ်လုံးမှာ တစ်ခါတည်း တင်ရင် ရပြီ။ Project တိုင်းမှာ ထပ်တင်စရာ မလိုဘူး။ Admin အခွင့်လည်း မလိုဘူး။</p>
+    <h2 class="L-mm mm">တင်နည်း — <span class="grad">တစ်မိနစ်ပဲ ကြာတယ်</span></h2>
+    <h2 class="L-en">Install — <span class="grad">takes one minute</span></h2>
+    <p class="sub L-mm mm">စက်တစ်လုံးမှာ တစ်ခါတည်း တင်ရင် ရပြီ။ Project တိုင်းမှာ ထပ်တင်စရာ မလိုဘူး။ Admin အခွင့်လည်း မလိုဘူး။</p>
+    <p class="sub L-en">Install once per machine — that's it. No per-project installs, and no admin rights needed.</p>
 
-    <h2 class="mm" style="font-size:21px">Windows သုံးသူများ</h2>
+    <h2 style="font-size:21px"><span class="L-mm mm">Windows သုံးသူများ</span><span class="L-en">For Windows users</span></h2>
     <div class="steps mt" style="margin-top:14px">
       <div class="step">
         <div class="step-num">1</div>
         <div>
-          <h3 class="mm">PowerShell ကို ဖွင့်</h3>
-          <p class="mm">Start menu ကို နှိပ်ပြီး PowerShell လို့ ရိုက်ရှာပါ။ တွေ့ရင် နှိပ်ပြီး ဖွင့်ပါ။</p>
+          <h3 class="L-mm mm">PowerShell ကို ဖွင့်</h3><h3 class="L-en">Open PowerShell</h3>
+          <p class="L-mm mm">Start menu ကို နှိပ်ပြီး PowerShell လို့ ရိုက်ရှာပါ။ တွေ့ရင် နှိပ်ပြီး ဖွင့်ပါ။</p>
+          <p class="L-en">Open the Start menu, type PowerShell, and click to open it.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div style="flex:1;min-width:0">
-          <h3 class="mm">ဒီ command ကို ကူးယူ</h3>
+          <h3 class="L-mm mm">ဒီ command ကို ကူးယူ</h3><h3 class="L-en">Copy this command</h3>
           <div class="cmdrow" style="margin-top:10px">
             <code id="cmd-win">irm https://cursormemo.funapp.live/install.ps1 | iex</code>
             <button class="copy" data-target="cmd-win">Copy</button>
@@ -320,244 +363,303 @@
       <div class="step">
         <div class="step-num">3</div>
         <div>
-          <h3 class="mm">PowerShell ထဲ paste လုပ်ပြီး Enter နှိပ်</h3>
-          <p class="mm">ဒါဆိုရင် အလိုအလျောက် ဒါတွေ ဖြစ်သွားမယ် — (၁) ai-memory program ကို download လုပ်ပြီး တင်ပေးမယ်၊ (၂) Cursor နဲ့ ချိတ်ပေးမယ်။</p>
+          <h3 class="L-mm mm">PowerShell ထဲ paste လုပ်ပြီး Enter နှိပ်</h3><h3 class="L-en">Paste it into PowerShell and press Enter</h3>
+          <p class="L-mm mm">ဒါဆိုရင် အလိုအလျောက် ဒါတွေ ဖြစ်သွားမယ် — (၁) ai-memory program ကို download လုပ်ပြီး တင်ပေးမယ်၊ (၂) Cursor နဲ့ ချိတ်ပေးမယ်။</p>
+          <p class="L-en">That's it — two things happen automatically: (1) the ai-memory program is downloaded and installed, (2) it is wired to Cursor.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
         <div>
-          <h3 class="mm">Cursor ကို restart လုပ်</h3>
-          <p class="mm">Cursor ကို ပိတ်ပြီး ပြန်ဖွင့်ပါ။ (သို့မဟုတ် Settings → MCP မှာ ai-memory server ကို ပိတ်/ဖွင့် လုပ်ပါ။) ပြီးရင် အဆင်သင့် ဖြစ်ပြီ။</p>
+          <h3 class="L-mm mm">Cursor ကို restart လုပ်</h3><h3 class="L-en">Restart Cursor</h3>
+          <p class="L-mm mm">Cursor ကို ပိတ်ပြီး ပြန်ဖွင့်ပါ။ (သို့မဟုတ် Settings → MCP မှာ ai-memory server ကို ပိတ်/ဖွင့် လုပ်ပါ။) ပြီးရင် အဆင်သင့် ဖြစ်ပြီ။</p>
+          <p class="L-en">Close Cursor and reopen it (or toggle the ai-memory server off/on in Settings → MCP). You're ready.</p>
         </div>
       </div>
     </div>
 
-    <h2 class="mm mt" style="font-size:21px">Linux / macOS / WSL2 သုံးသူများ</h2>
-    <p class="sub mm" style="margin-bottom:14px">Terminal ဖွင့်ပြီး ဒီ command ကို paste လုပ်ပြီး Enter နှိပ်ပါ။</p>
+    <h2 class="mt" style="font-size:21px">Linux / macOS / WSL2 <span class="L-mm mm">သုံးသူများ</span><span class="L-en">users</span></h2>
+    <p class="sub L-mm mm" style="margin-bottom:14px">Terminal ဖွင့်ပြီး ဒီ command ကို paste လုပ်ပြီး Enter နှိပ်ပါ။</p>
+    <p class="sub L-en" style="margin-bottom:14px">Open a terminal, paste this command, and press Enter.</p>
     <div class="cmdrow" style="max-width:760px">
       <code id="cmd-sh">curl -fsSL https://cursormemo.funapp.live/install.sh | sh</code>
       <button class="copy" data-target="cmd-sh">Copy</button>
     </div>
 
-    <div class="note mm mt">💡 <b>Installer က ဘာလုပ်ပေးလဲ</b> — နောက်ကွယ်မှာ အလုပ်လုပ်ပေးတာက <b>ai-memory</b> ဆိုတဲ့ open source program (MIT license)။ ဒီ installer က အဲ့ဒီ program ရဲ့ တရားဝင် installer ကိုပဲ သုံးပြီး Cursor တစ်ခုတည်းနဲ့ ချိတ်ပေးတာ။ ကိုယ်တိုင် code အသစ် ထည့်ထားတာ မဟုတ်ဘူး။</div>
+    <div class="note mt"><span class="L-mm mm">💡 <b>Installer က ဘာလုပ်ပေးလဲ</b> — နောက်ကွယ်မှာ အလုပ်လုပ်ပေးတာက <b>ai-memory</b> ဆိုတဲ့ open source program (MIT license)။ ဒီ installer က အဲ့ဒီ program ရဲ့ တရားဝင် installer ကိုပဲ သုံးပြီး Cursor တစ်ခုတည်းနဲ့ ချိတ်ပေးတာ။ ကိုယ်တိုင် code အသစ် ထည့်ထားတာ မဟုတ်ဘူး။</span><span class="L-en">💡 <b>What does the installer do?</b> Behind the scenes it runs <b>ai-memory</b>, an open-source program (MIT). This installer simply calls ai-memory's official installer and scopes the setup to Cursor only. No new code is added on top.</span></div>
   </section>
 
   <!-- ============ TAB: USAGE ============ -->
   <section class="page" id="page-usage">
-    <h2 class="mm">သုံးနည်း — <span class="grad">ဘာမှ အထူး မလိုဘူး</span></h2>
-    <p class="sub mm">တင်ပြီးရင် ပုံမှန်အတိုင်း code ရေးရုံပဲ။ မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်၊ သူ့ဘာသာ ပြန်ဖတ်တယ်။</p>
+    <h2 class="L-mm mm">သုံးနည်း — <span class="grad">ဘာမှ အထူး မလိုဘူး</span></h2>
+    <h2 class="L-en">Usage — <span class="grad">nothing special to do</span></h2>
+    <p class="sub L-mm mm">တင်ပြီးရင် ပုံမှန်အတိုင်း code ရေးရုံပဲ။ မှတ်စုက သူ့ဘာသာ ရေးသွားတယ်၊ သူ့ဘာသာ ပြန်ဖတ်တယ်။</p>
+    <p class="sub L-en">After installing, just code as usual. The notebook writes itself — and reads itself.</p>
 
-    <h2 class="mm" style="font-size:21px">ပထမဆုံး စမ်းကြည့်ရန်</h2>
+    <h2 style="font-size:21px"><span class="L-mm mm">ပထမဆုံး စမ်းကြည့်ရန်</span><span class="L-en">Try it first</span></h2>
     <div class="steps mt" style="margin-top:14px">
       <div class="step">
         <div class="step-num">1</div>
         <div>
-          <h3 class="mm">Project တစ်ခု ဖွင့်</h3>
-          <p class="mm">Cursor ထဲမှာ မင်း လုပ်နေကျ project တစ်ခုခု ဖွင့်ပါ။</p>
+          <h3 class="L-mm mm">Project တစ်ခု ဖွင့်</h3><h3 class="L-en">Open a project</h3>
+          <p class="L-mm mm">Cursor ထဲမှာ မင်း လုပ်နေကျ project တစ်ခုခု ဖွင့်ပါ။</p>
+          <p class="L-en">Open any project you normally work on inside Cursor.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div>
-          <h3 class="mm">AI ကို ဒီလို မေးကြည့်</h3>
-          <p><code style="font-family:ui-monospace,Consolas,monospace;color:var(--ok);font-size:14.5px">"What do you remember about this project?"</code></p>
-          <p class="mm">AI က မှတ်စုထဲကနေ ပြန်ဖြေရင် ချိတ်ဆက်မှု အဆင်ပြေပြီ။</p>
+          <h3 class="L-mm mm">AI ကို ဒီလို မေးကြည့်</h3><h3 class="L-en">Ask the AI this</h3>
+          <p><code>"What do you remember about this project?"</code></p>
+          <p class="L-mm mm">AI က မှတ်စုထဲကနေ ပြန်ဖြေရင် ချိတ်ဆက်မှု အဆင်ပြေပြီ။</p>
+          <p class="L-en">If the AI answers from the notebook, the connection works.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div>
-          <h3 class="mm">ပုံမှန်အတိုင်း အလုပ်လုပ်</h3>
-          <p class="mm">Code ရေးတိုင်း မှတ်စုက အလိုအလျောက် တိုးသွားတယ်။ နောက်တစ်ခါ chat အသစ် ဖွင့်ရင် AI က ဆက်ကောက်လိမ့်မယ်။</p>
+          <h3 class="L-mm mm">ပုံမှန်အတိုင်း အလုပ်လုပ်</h3><h3 class="L-en">Work as usual</h3>
+          <p class="L-mm mm">Code ရေးတိုင်း မှတ်စုက အလိုအလျောက် တိုးသွားတယ်။ နောက်တစ်ခါ chat အသစ် ဖွင့်ရင် AI က ဆက်ကောက်လိမ့်မယ်။</p>
+          <p class="L-en">Every coding session grows the notebook automatically. Your next new chat will pick up from it.</p>
         </div>
       </div>
     </div>
 
-    <h2 class="mm mt" style="font-size:21px">မေးလို့ရတဲ့ စာတွေ</h2>
-    <p class="sub mm" style="margin-bottom:14px">Cursor chat ထဲမှာ ဒီလိုစာတွေ ရိုက်ပြီး မှတ်စုကို ပြန်ခေါ်လို့ရတယ်။</p>
+    <h2 class="mt" style="font-size:21px"><span class="L-mm mm">မေးလို့ရတဲ့ စာတွေ</span><span class="L-en">Things you can ask</span></h2>
+    <p class="sub L-mm mm" style="margin-bottom:14px">Cursor chat ထဲမှာ ဒီလိုစာတွေ ရိုက်ပြီး မှတ်စုကို ပြန်ခေါ်လို့ရတယ်။</p>
+    <p class="sub L-en" style="margin-bottom:14px">Type these in the Cursor chat to call the notebook back.</p>
     <div class="grid">
       <div class="card">
         <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Where did we leave off?"</code></h3>
-        <p class="mm">ဘယ်နေရာမှာ ရပ်ခဲ့လဲ — နောက်ဆုံး လုပ်ခဲ့တာနဲ့ ကျန်နေတာကို ပြန်ပြောပြတယ်။</p>
+        <p class="L-mm mm">ဘယ်နေရာမှာ ရပ်ခဲ့လဲ — နောက်ဆုံး လုပ်ခဲ့တာနဲ့ ကျန်နေတာကို ပြန်ပြောပြတယ်။</p>
+        <p class="L-en">Where did we stop — it recaps the last work and what's still open.</p>
       </div>
       <div class="card">
         <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Have we discussed X?"</code></h3>
-        <p class="mm">X အကြောင်း အရင်က ဆွေးနွေးဖူးလား — မှတ်စုထဲကနေ ရှာပြီး ပြန်ပြောပြတယ်။</p>
+        <p class="L-mm mm">X အကြောင်း အရင်က ဆွေးနွေးဖူးလား — မှတ်စုထဲကနေ ရှာပြီး ပြန်ပြောပြတယ်။</p>
+        <p class="L-en">Did we talk about X before — it searches the notebook and tells you.</p>
       </div>
       <div class="card">
         <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Catch me up"</code></h3>
-        <p class="mm">အကျဉ်းချုပ် ပြောပြ — ရက်အနည်းငယ် နားပြီးမှ ပြန်လာရင် အခြေအနေကို အတိုချုပ် ရှင်းပြတယ်။</p>
+        <p class="L-mm mm">အကျဉ်းချုပ် ပြောပြ — ရက်အနည်းငယ် နားပြီးမှ ပြန်လာရင် အခြေအနေကို အတိုချုပ် ရှင်းပြတယ်။</p>
+        <p class="L-en">Give me the short version — after a few days away, it summarizes where things stand.</p>
       </div>
       <div class="card">
         <h3><code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace">"Save context for the next session"</code></h3>
-        <p class="mm">နောက် session အတွက် မှတ်စု ရေးထား — ရပ်ခါနီးမှာ နောက်လူ (နောက် AI) အတွက် မှတ်စု လက်ဆင့်ကမ်း ရေးပေးတယ်။</p>
+        <p class="L-mm mm">နောက် session အတွက် မှတ်စု ရေးထား — ရပ်ခါနီးမှာ နောက်လူ (နောက် AI) အတွက် မှတ်စု လက်ဆင့်ကမ်း ရေးပေးတယ်။</p>
+        <p class="L-en">Write a note for the next session — a hand-off note for the next person (the next AI) before you stop.</p>
       </div>
     </div>
 
-    <div class="note mm mt">📖 <b>မှတ်စုတွေကို ကိုယ်တိုင် ကြည့်ချင်ရင်</b> — Browser ထဲမှာ <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> ကို ဖွင့်ပါ။ မှတ်စု စာမျက်နှာတွေကို စာအုပ်လို ဖတ်လို့ရတယ်။</div>
+    <div class="note mt"><span class="L-mm mm">📖 <b>မှတ်စုတွေကို ကိုယ်တိုင် ကြည့်ချင်ရင်</b> — Browser ထဲမှာ <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> ကို ဖွင့်ပါ။ မှတ်စု စာမျက်နှာတွေကို စာအုပ်လို ဖတ်လို့ရတယ်။</span><span class="L-en">📖 <b>Want to browse the notes yourself?</b> Open <code style="color:var(--ok)">http://127.0.0.1:49374/web</code> in your browser — you can read the notebook pages like a book.</span></div>
   </section>
 
   <!-- ============ TAB: TECH ============ -->
   <section class="page" id="page-tech">
-    <h2 class="mm">ဘယ်လို <span class="grad">နည်းစနစ်နဲ့</span> ဖန်တီးထားလဲ</h2>
-    <p class="sub mm">CursorMemo က အပိုင်း ၂ ပိုင်း ပေါင်းစပ်ထားတာ — နောက်ကွယ်က အင်ဂျင် (ai-memory) နဲ့ အပေါ်က ထုပ်ပိုးမှု (CursorMemo)။ တစ်ခုချင်းစီ ဘယ်လို လုပ်ထားလဲ ရှင်းပြထားတယ်။</p>
+    <h2 class="L-mm mm">ဘယ်လို <span class="grad">နည်းစနစ်နဲ့</span> ဖန်တီးထားလဲ</h2>
+    <h2 class="L-en">How is it <span class="grad">built?</span></h2>
+    <p class="sub L-mm mm">CursorMemo က အပိုင်း ၂ ပိုင်း ပေါင်းစပ်ထားတာ — နောက်ကွယ်က အင်ဂျင် (ai-memory) နဲ့ အပေါ်က ထုပ်ပိုးမှု (CursorMemo)။ တစ်ခုချင်းစီ ဘယ်လို လုပ်ထားလဲ ရှင်းပြထားတယ်။</p>
+    <p class="sub L-en">CursorMemo combines two parts — the engine behind it (ai-memory) and the packaging on top (CursorMemo). Here's how each one works.</p>
 
-    <h2 class="mm" style="font-size:21px">အပိုင်း ၁ — အင်ဂျင်: ai-memory</h2>
-    <p class="sub mm" style="margin-bottom:14px">Rust ဆိုတဲ့ programming language နဲ့ ရေးထားတဲ့ program တစ်ခုတည်း (binary တစ်ဖိုင်တည်း)။ Server သီးခြား, database သီးခြား တင်စရာ မလိုဘူး — အဲ့ဒီတစ်ဖိုင်တည်းက အကုန် လုပ်တယ်။</p>
+    <h2 style="font-size:21px"><span class="L-mm mm">အပိုင်း ၁ — အင်ဂျင်: ai-memory</span><span class="L-en">Part 1 — The engine: ai-memory</span></h2>
+    <p class="sub L-mm mm" style="margin-bottom:14px">Rust ဆိုတဲ့ programming language နဲ့ ရေးထားတဲ့ program တစ်ခုတည်း (binary တစ်ဖိုင်တည်း)။ Server သီးခြား, database သီးခြား တင်စရာ မလိုဘူး — အဲ့ဒီတစ်ဖိုင်တည်းက အကုန် လုပ်တယ်။</p>
+    <p class="sub L-en" style="margin-bottom:14px">A single program (one binary file) written in the Rust programming language. No separate server or database to install — that one file does everything.</p>
 
     <div class="flow" style="margin-top:6px">
       <div class="fstep">
         <div class="num">CURSOR</div>
         <div class="em">💻</div>
-        <h3 class="mm">Cursor</h3>
-        <p class="mm">မင်း code ရေးတဲ့ နေရာ။ အဖြစ်အပျက်တွေကို hooks က မှတ်တယ်။</p>
+        <h3>Cursor</h3>
+        <p class="L-mm mm">မင်း code ရေးတဲ့ နေရာ။ အဖြစ်အပျက်တွေကို hooks က မှတ်တယ်။</p>
+        <p class="L-en">Where you write code. Events are captured by hooks.</p>
       </div>
       <div class="farrow">⇄</div>
       <div class="fstep">
         <div class="num">MCP + HOOKS</div>
         <div class="em">🔌</div>
-        <h3 class="mm">ချိတ်ဆက်မှု</h3>
-        <p class="mm">MCP ဆိုတဲ့ စံနှုန်းနဲ့ AI က မှတ်စုကို ရှာ/ဖတ်တယ်။ Hooks က session အစ/အဆုံးကို မှတ်တယ်။</p>
+        <h3 class="L-mm mm">ချိတ်ဆက်မှု</h3><h3 class="L-en">The connection</h3>
+        <p class="L-mm mm">MCP ဆိုတဲ့ စံနှုန်းနဲ့ AI က မှတ်စုကို ရှာ/ဖတ်တယ်။ Hooks က session အစ/အဆုံးကို မှတ်တယ်။</p>
+        <p class="L-en">Over the MCP standard, the AI searches and reads the notebook. Hooks mark session start/end.</p>
       </div>
       <div class="farrow">⇄</div>
       <div class="fstep">
         <div class="num">AI-MEMORY</div>
         <div class="em">🧠</div>
-        <h3 class="mm">မှတ်စု server</h3>
-        <p class="mm">ကိုယ့်စက်ထဲမှာပဲ run တယ် (127.0.0.1)။ မှတ်စုတွေ စုစည်း, သိမ်း, ပြန်ရှာပေးတယ်။</p>
+        <h3 class="L-mm mm">မှတ်စု server</h3><h3 class="L-en">The note server</h3>
+        <p class="L-mm mm">ကိုယ့်စက်ထဲမှာပဲ run တယ် (127.0.0.1)။ မှတ်စုတွေ စုစည်း, သိမ်း, ပြန်ရှာပေးတယ်။</p>
+        <p class="L-en">Runs only on your own machine (127.0.0.1). Collects, stores, and searches the notes.</p>
       </div>
     </div>
 
-    <h2 class="mm mt" style="font-size:21px">အလုပ်လုပ်ပုံ အဆင့် ၄ ဆင့်</h2>
-    <div class="steps mt" style="margin-top:14px">
+    <h2 class="mt" style="font-size:21px"><span class="L-mm mm">အလုပ်လုပ်ပုံ အဆင့် ၄ ဆင့်</span><span class="L-en">The 4-step pipeline</span></h2>
+    <div class="steps" style="margin-top:14px">
       <div class="step">
         <div class="step-num">1</div>
         <div>
-          <h3 class="mm">မှတ်ယူတယ် (Capture)</h3>
-          <p class="mm">Cursor ရဲ့ lifecycle hooks က session တစ်ခုလုံးရဲ့ အဖြစ်အပျက်တွေ — မင်း ဘာမေးလဲ၊ AI ဘာ tool သုံးလဲ၊ session ဘယ်တော့ စပြီး ဘယ်တော့ ပြီးလဲ — ကို တိတ်တိတ်လေး server ဆီ ပို့တယ်။</p>
+          <h3 class="L-mm mm">မှတ်ယူတယ် (Capture)</h3><h3 class="L-en">Capture</h3>
+          <p class="L-mm mm">Cursor ရဲ့ lifecycle hooks က session တစ်ခုလုံးရဲ့ အဖြစ်အပျက်တွေ — မင်း ဘာမေးလဲ၊ AI ဘာ tool သုံးလဲ၊ session ဘယ်တော့ စပြီး ဘယ်တော့ ပြီးလဲ — ကို တိတ်တိတ်လေး server ဆီ ပို့တယ်။</p>
+          <p class="L-en">Cursor's lifecycle hooks quietly send the session's events — what you asked, what tools the AI used, when the session started and ended — to the server.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div>
-          <h3 class="mm">စစ်ပြီး သန့်တယ် (Sanitize)</h3>
-          <p class="mm">မသိမ်းခင် အရင် စစ်တယ် — password, API key လို အရေးကြီးတဲ့ အရာတွေ ပါလာရင် ဖယ်ပြီးမှ သိမ်းတယ်။</p>
+          <h3 class="L-mm mm">စစ်ပြီး သန့်တယ် (Sanitize)</h3><h3 class="L-en">Sanitize</h3>
+          <p class="L-mm mm">မသိမ်းခင် အရင် စစ်တယ် — password, API key လို အရေးကြီးတဲ့ အရာတွေ ပါလာရင် ဖယ်ပြီးမှ သိမ်းတယ်။</p>
+          <p class="L-en">Before anything is stored, it is checked — passwords, API keys, and other secrets are stripped out first.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div>
-          <h3 class="mm">စာမျက်နှာ အဖြစ် စုစည်းတယ် (Consolidate)</h3>
-          <p class="mm">Session ပြီးတာနဲ့ အဖြစ်အပျက်တွေကို ဖတ်ရလွယ်တဲ့ markdown စာမျက်နှာတွေ အဖြစ် ပြောင်းတယ်။ ဒီစာဖိုင်တွေက မှတ်စုရဲ့ မူရင်း အရင်းအမြစ် — git နဲ့ version မှတ်တမ်း ထိန်းထားတယ်။ ရှာရမြန်အောင် SQLite database (FTS5 full-text search) နဲ့ အညွှန်း ထပ်လုပ်တယ်။</p>
+          <h3 class="L-mm mm">စာမျက်နှာ အဖြစ် စုစည်းတယ် (Consolidate)</h3><h3 class="L-en">Consolidate</h3>
+          <p class="L-mm mm">Session ပြီးတာနဲ့ အဖြစ်အပျက်တွေကို ဖတ်ရလွယ်တဲ့ markdown စာမျက်နှာတွေ အဖြစ် ပြောင်းတယ်။ ဒီစာဖိုင်တွေက မှတ်စုရဲ့ မူရင်း အရင်းအမြစ် — git နဲ့ version မှတ်တမ်း ထိန်းထားတယ်။ ရှာရမြန်အောင် SQLite database (FTS5 full-text search) နဲ့ အညွှန်း ထပ်လုပ်တယ်။</p>
+          <p class="L-en">When a session ends, its events become readable markdown pages. Those files are the source of truth, versioned with git. A SQLite database (FTS5 full-text search) indexes them for fast lookup.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
         <div>
-          <h3 class="mm">ပြန်ရှာပြီး လက်ဆင့်ကမ်းတယ် (Recall + Handoff)</h3>
-          <p class="mm">နောက် session စတာနဲ့ ရှေ့ session ရဲ့ အကျဉ်းချုပ်ကို AI ဆီ အလိုအလျောက် ပို့ပေးတယ်။ AI က လိုရင် မှတ်စုထဲမှာ full-text search နဲ့ အသေးစိတ် ထပ်ရှာလို့ရတယ်။ အခြေခံ ပုံစံမှာ ဒီအဆင့်အားလုံး AI API လုံးဝ မသုံးဘူး — key မလိုဘူး။</p>
+          <h3 class="L-mm mm">ပြန်ရှာပြီး လက်ဆင့်ကမ်းတယ် (Recall + Handoff)</h3><h3 class="L-en">Recall + Handoff</h3>
+          <p class="L-mm mm">နောက် session စတာနဲ့ ရှေ့ session ရဲ့ အကျဉ်းချုပ်ကို AI ဆီ အလိုအလျောက် ပို့ပေးတယ်။ AI က လိုရင် မှတ်စုထဲမှာ full-text search နဲ့ အသေးစိတ် ထပ်ရှာလို့ရတယ်။ အခြေခံ ပုံစံမှာ ဒီအဆင့်အားလုံး AI API လုံးဝ မသုံးဘူး — key မလိုဘူး။</p>
+          <p class="L-en">When the next session starts, the previous summary is handed to the AI automatically. If needed, the AI can dig deeper with full-text search. The default setup uses no AI API for any of this — no key needed.</p>
         </div>
       </div>
     </div>
 
-    <h2 class="mm mt" style="font-size:21px">အပိုင်း ၂ — ထုပ်ပိုးမှု: CursorMemo</h2>
-    <p class="sub mm" style="margin-bottom:14px">CursorMemo ကိုယ်တိုင်က code အသစ် မဟုတ်ဘူး။ သူများတွေ အလွယ်တကူ တင်သုံးနိုင်အောင် လုပ်ထားတဲ့ ထုပ်ပိုးမှုပဲ။</p>
+    <h2 class="mt" style="font-size:21px"><span class="L-mm mm">အပိုင်း ၂ — ထုပ်ပိုးမှု: CursorMemo</span><span class="L-en">Part 2 — The packaging: CursorMemo</span></h2>
+    <p class="sub L-mm mm" style="margin-bottom:14px">CursorMemo ကိုယ်တိုင်က code အသစ် မဟုတ်ဘူး။ သူများတွေ အလွယ်တကူ တင်သုံးနိုင်အောင် လုပ်ထားတဲ့ ထုပ်ပိုးမှုပဲ။</p>
+    <p class="sub L-en" style="margin-bottom:14px">CursorMemo itself is not new code. It's the packaging that makes the engine easy for anyone to install and use.</p>
     <div class="grid">
       <div class="card">
         <div class="icon">📦</div>
-        <h3 class="mm">Installer scripts</h3>
-        <p class="mm">Windows အတွက် PowerShell script, Linux/macOS အတွက် Bash script။ အဲ့ဒီ script တွေက ai-memory ရဲ့ တရားဝင် installer ကို ခေါ်သုံးပြီး Cursor တစ်ခုတည်းနဲ့ပဲ ချိတ်ဖို့ <code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace;font-size:13.5px">setup --agent cursor</code> ဆိုတဲ့ အမိန့်ကို run ပေးတယ်။</p>
+        <h3 class="L-mm mm">Installer scripts</h3><h3 class="L-en">Installer scripts</h3>
+        <p class="L-mm mm">Windows အတွက် PowerShell script, Linux/macOS အတွက် Bash script။ အဲ့ဒီ script တွေက ai-memory ရဲ့ တရားဝင် installer ကို ခေါ်သုံးပြီး Cursor တစ်ခုတည်းနဲ့ပဲ ချိတ်ဖို့ <code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace;font-size:13.5px">setup --agent cursor</code> ဆိုတဲ့ အမိန့်ကို run ပေးတယ်။</p>
+        <p class="L-en">A PowerShell script for Windows and a Bash script for Linux/macOS. They call ai-memory's official installer, then run <code style="color:var(--ok);font-family:ui-monospace,Consolas,monospace;font-size:13.5px">setup --agent cursor</code> to wire Cursor only.</p>
       </div>
       <div class="card">
         <div class="icon">🌐</div>
-        <h3 class="mm">ဒီ website</h3>
-        <p class="mm">Static web page တစ်ဖိုင်တည်း (HTML + CSS + JavaScript)။ Framework မပါ, build လုပ်စရာ မလို။ Server ပေါ်မှာ nginx နဲ့ တင်ပြီး Let's Encrypt HTTPS လက်မှတ် သုံးထားတယ်။</p>
+        <h3 class="L-mm mm">ဒီ website</h3><h3 class="L-en">This website</h3>
+        <p class="L-mm mm">Static web page တစ်ဖိုင်တည်း (HTML + CSS + JavaScript)။ Framework မပါ, build လုပ်စရာ မလို။ Server ပေါ်မှာ nginx နဲ့ တင်ပြီး Let's Encrypt HTTPS လက်မှတ် သုံးထားတယ်။</p>
+        <p class="L-en">A single static web page (HTML + CSS + JavaScript). No framework, no build step. Served by nginx with a Let's Encrypt HTTPS certificate.</p>
       </div>
       <div class="card">
         <div class="icon">🐙</div>
-        <h3 class="mm">GitHub + MIT license</h3>
-        <p class="mm">Source code အကုန်ကို GitHub မှာ public တင်ထားတယ်။ ai-memory လည်း MIT, CursorMemo လည်း MIT — ဘယ်သူမဆို အခမဲ့ သုံး, ပြင်, ပြန်ဝေလို့ရတယ်။</p>
+        <h3 class="L-mm mm">GitHub + MIT license</h3><h3 class="L-en">GitHub + MIT license</h3>
+        <p class="L-mm mm">Source code အကုန်ကို GitHub မှာ public တင်ထားတယ်။ ai-memory လည်း MIT, CursorMemo လည်း MIT — ဘယ်သူမဆို အခမဲ့ သုံး, ပြင်, ပြန်ဝေလို့ရတယ်။</p>
+        <p class="L-en">All source code is public on GitHub. Both ai-memory and CursorMemo are MIT — anyone can use, modify, and share them for free.</p>
       </div>
     </div>
 
-    <div class="note mm mt">🔍 <b>အကျဉ်းချုပ်</b> — Rust program တစ်ခုတည်းက မှတ်စု server အဖြစ် ကိုယ့်စက်ထဲမှာ run တယ်။ Cursor က MCP + hooks နဲ့ ချိတ်တယ်။ မှတ်စုက markdown စာဖိုင်တွေ + SQLite အညွှန်း။ CursorMemo ကတော့ အဲ့ဒါကို တစ်ချက် install နဲ့ မြန်မာ လမ်းညွှန် ပေါင်းထည့်ထားတဲ့ ထုပ်ပိုးမှု။</div>
+    <div class="note mt"><span class="L-mm mm">🔍 <b>အကျဉ်းချုပ်</b> — Rust program တစ်ခုတည်းက မှတ်စု server အဖြစ် ကိုယ့်စက်ထဲမှာ run တယ်။ Cursor က MCP + hooks နဲ့ ချိတ်တယ်။ မှတ်စုက markdown စာဖိုင်တွေ + SQLite အညွှန်း။ CursorMemo ကတော့ အဲ့ဒါကို တစ်ချက် install နဲ့ မြန်မာ လမ်းညွှန် ပေါင်းထည့်ထားတဲ့ ထုပ်ပိုးမှု။</span><span class="L-en">🔍 <b>In short</b> — one Rust program runs as a note server on your own machine. Cursor connects over MCP + hooks. Notes live as markdown files plus a SQLite index. CursorMemo wraps all of it with a one-line install and this guide.</span></div>
   </section>
 
   <!-- ============ TAB: FAQ ============ -->
   <section class="page" id="page-faq">
-    <h2 class="mm">မေးလေ့ရှိသော<span class="grad">မေးခွန်းများ</span></h2>
-    <p class="sub mm">လူတွေ အမေးများဆုံး မေးခွန်းတွေကို စုပြီး ရှင်းပြထားတယ်။</p>
+    <h2 class="L-mm mm">မေးလေ့<span class="grad">ရှိသောမေးခွန်းများ</span></h2>
+    <h2 class="L-en">Frequently asked <span class="grad">questions</span></h2>
+    <p class="sub L-mm mm">လူတွေ အမေးများတဲ့ မေးခွန်းတွေကို စုပြီး ဖြေထားတယ်။</p>
+    <p class="sub L-en">Answers to the questions people ask most.</p>
 
     <div class="faq">
       <div class="qa">
-        <h3 class="mm">Project တိုင်းမှာ ထပ်တင်ရမှာလား?</h3>
-        <p class="mm">မလိုဘူး။ စက်တစ်လုံးမှာ တစ်ခါတည်း တင်ရင် ရပြီ။ Installer က Cursor ရဲ့ global setting ထဲကို ရေးပေးတာမို့ ဖွင့်သမျှ project တိုင်းမှာ အလိုအလျောက် အလုပ်လုပ်တယ်။</p>
+        <h3 class="L-mm mm">API key လိုလား? ပိုက်ဆံ ကုန်လား?</h3><h3 class="L-en">Does it need an API key? Does it cost money?</h3>
+        <p class="L-mm mm">မလိုဘူး၊ မကုန်ဘူး။ အခြေခံ ပုံစံက လုံးဝ အခမဲ့။ မှတ်စုကို အလိုအလျောက် ရေးပေးတဲ့ အလုပ်ကို ကိုယ့်စက်ထဲက program ကပဲ လုပ်တယ် — အပြင် AI ကို မခေါ်ဘူး။</p>
+        <p class="L-en">No and no. The default setup is completely free. The note-writing is done by the program on your own machine — no outside AI is called.</p>
       </div>
       <div class="qa">
-        <h3 class="mm">API key သို့မဟုတ် အကောင့် လိုလား?</h3>
-        <p class="mm">မလိုဘူး။ အခြေခံ ပုံစံက ဘယ် AI ဝန်ဆောင်မှုနဲ့မှ မချိတ်ဘူး။ အခမဲ့၊ အကောင့်မလို၊ အင်တာနက်တောင် မရှိလည်း မှတ်စုက အလုပ်လုပ်တယ်။ (Download လုပ်တုန်းသာ အင်တာနက် လိုတယ်။)</p>
+        <h3 class="L-mm mm">မှတ်စုတွေ ဘယ်မှာ သိမ်းထားလဲ? သူများ မြင်နိုင်လား?</h3><h3 class="L-en">Where are the notes stored? Can others see them?</h3>
+        <p class="L-mm mm">မင်းရဲ့ ကွန်ပျူတာထဲမှာပဲ သိမ်းတယ်။ အပြင်က server ကို ဘာမှ မပို့ဘူး။ Server ကလည်း မင်းရဲ့ စက်ထဲမှာပဲ run တာ (localhost) ဖြစ်လို့ အင်တာနက်ကနေ ဘယ်သူမှ မဝင်နိုင်ဘူး။</p>
+        <p class="L-en">Only on your own computer. Nothing is sent to an outside server, and the server itself runs on localhost — nobody can reach it from the internet.</p>
       </div>
       <div class="qa">
-        <h3 class="mm">ငာ့ code အကြောင်းတွေ အပြင်ကို ရောက်သွားမလား?</h3>
-        <p class="mm">မရောက်ဘူး။ မှတ်စုတွေ အကုန် မင်းရဲ့ ကွန်ပျူတာထဲမှာပဲ သိမ်းတယ်။ Program က မင်းရဲ့ စက်ထဲမှာပဲ run တာ။ သိမ်းခါနီးမှာလည်း password လို အရေးကြီးတဲ့ အရာတွေကို စစ်ပြီး ဖယ်ပေးတဲ့ အဆင့် ပါတယ်။</p>
+        <h3 class="L-mm mm">Project တိုင်းမှာ install ထပ်လုပ်ရလား?</h3><h3 class="L-en">Do I install it for every project?</h3>
+        <p class="L-mm mm">မလုပ်ရဘူး။ စက် တစ်လုံးမှာ တစ်ခါတည်း တင်ရင် ရပြီ။ Cursor သုံးတဲ့ project တိုင်းမှာ အလိုအလျောက် အလုပ်လုပ်တယ်။ Project တစ်ခုနဲ့ တစ်ခုရဲ့ မှတ်စု မရောအောင် စနစ်က သူ့ဘာသာ ခွဲထားပေးတယ်။</p>
+        <p class="L-en">No. One install per machine covers every project you open in Cursor, and the system keeps each project's notes separate automatically.</p>
       </div>
       <div class="qa">
-        <h3 class="mm">Project တွေ အများကြီး လုပ်ရင် မှတ်စုတွေ ရောကုန်မလား?</h3>
-        <p class="mm">မရောဘူး။ မှတ်စုကို project တစ်ခုချင်းစီ အလိုက် folder လမ်းကြောင်းနဲ့ ခွဲသိမ်းတယ်။ Project A မှာ အလုပ်လုပ်ရင် A ရဲ့ မှတ်စုပဲ တိုးတယ်။</p>
+        <h3 class="L-mm mm">Cursor ကို update လုပ်ရင် ပျက်သွားလား?</h3><h3 class="L-en">Will a Cursor update break it?</h3>
+        <p class="L-mm mm">မပျက်ဘူး။ ချိတ်ဆက်မှုတွေက Cursor ရဲ့ settings ဖိုင်တွေထဲမှာ ရေးထားတာ ဖြစ်လို့ update လုပ်လည်း မပျောက်ဘူး။ တစ်ခါတစ်ရံ ဖိုင်တွေ ပြန်စစ်/ပြန်ထည့်လို့ရတဲ့ အမိန့် ရှိတယ် — <code>ai-memory setup --agent cursor</code> ကို ထပ် run ရင် ပြန်ကောင်းတယ်။</p>
+        <p class="L-en">No. The wiring lives in Cursor's settings files, so updates don't remove it. If anything ever looks off, just re-run <code>ai-memory setup --agent cursor</code>.</p>
       </div>
       <div class="qa">
-        <h3 class="mm">ဖျက်ချင်ရင် ဘယ်လိုဖျက်မလဲ?</h3>
-        <p class="mm">PowerShell သို့မဟုတ် terminal ထဲမှာ <code>ai-memory uninstall --apply</code> လို့ ရိုက်ပါ။ Installer က တင်ခဲ့သမျှ အကုန်ကိုပဲ ဖယ်ပေးတယ် — တခြားဟာ မထိဘူး။</p>
+        <h3 class="L-mm mm">တခြား AI tool တွေနဲ့ရော သုံးလို့ရလား?</h3><h3 class="L-en">Can I use it with other AI tools?</h3>
+        <p class="L-mm mm">ရတယ်။ နောက်ကွယ်က ai-memory က Claude Code, Codex, Gemini CLI စတဲ့ tool အများကြီးနဲ့ ချိတ်လို့ရတယ်။ ဒီ installer ကတော့ Cursor တစ်ခုတည်းကိုပဲ ချိတ်ပေးတာ — Cursor ကို အဓိက သုံးသူတွေ အတွက် ရိုးရှင်းအောင် လုပ်ထားလို့။</p>
+        <p class="L-en">Yes. The ai-memory engine behind it supports Claude Code, Codex, Gemini CLI, and many more. This installer wires Cursor only — kept simple on purpose for Cursor-first users.</p>
       </div>
       <div class="qa">
-        <h3 class="mm">Cursor အပြင် တခြား AI tool တွေနဲ့ရော ရလား?</h3>
-        <p class="mm">အခု CursorMemo က Cursor တစ်ခုအတွက်ပဲ ရည်ရွယ်ထားတယ်။ နောက်ကွယ်က program ကတော့ AI tool ၂၀ ကျော်နဲ့ ချိတ်လို့ရတယ် — နောက်ပိုင်း လိုအပ်ရင် ထပ်တိုးပေးမယ်။</p>
+        <h3 class="L-mm mm">ဖြုတ်ချင်ရင် ဘယ်လိုလုပ်ရမလဲ?</h3><h3 class="L-en">How do I uninstall it?</h3>
+        <p class="L-mm mm">Terminal မှာ <code>ai-memory uninstall --apply</code> ကို run ပါ။ ချိတ်ဆက်မှုတွေကို သန့်ရှင်းစွာ ဖယ်ပေးပြီး မှတ်စုတွေကို ဖျက်မလား မေးပေးတယ် — သိမ်းထားချင်ရင် သိမ်းထားလို့ရတယ်။</p>
+        <p class="L-en">Run <code>ai-memory uninstall --apply</code> in a terminal. It cleanly removes the wiring and asks before deleting any notes — you can keep them if you want.</p>
       </div>
       <div class="qa">
-        <h3 class="mm">ပိုက်ဆံ ပေးရမှာလား?</h3>
-        <p class="mm">မပေးရဘူး။ CursorMemo ရော၊ နောက်ကွယ်က ai-memory ရော open source (MIT license) — အခမဲ့ သုံးနိုင်၊ ပြင်နိုင်၊ ပြန်ဝေနိုင်။</p>
+        <h3 class="L-mm mm">ဒါက ai-memory နဲ့ ဘာကွာလဲ?</h3><h3 class="L-en">How is this different from ai-memory itself?</h3>
+        <p class="L-mm mm">ai-memory က မူရင်း program (akitaonrails ဆိုသူ လုပ်ထားတာ)။ CursorMemo က အဲ့ဒီ program ကို Cursor သမားတွေ အလွယ်တကူ တင်သုံးနိုင်အောင် လုပ်ထားတဲ့ ထုပ်ပိုးမှု — တစ်ကြောင်း command နဲ့ မြန်မာ လမ်းညွှန်စာတွေ ပါဝင်တယ်။ နှစ်ခုလုံးက MIT license ဆီမှာ အခမဲ့ ဖွင့်ထုတ်ထားတယ်။</p>
+        <p class="L-en">ai-memory is the original program (by akitaonrails). CursorMemo is packaging that makes it easy for Cursor users to install — a one-line command plus this guide. Both are free and open under the MIT license.</p>
       </div>
     </div>
   </section>
-
 </main>
 
 <footer>
-  <div class="wrap mm">
-    CursorMemo — Funapp က ထုတ်တဲ့ open source ထုပ်ပိုးမှု (MIT)။ နောက်ကွယ်က program: <a href="https://github.com/akitaonrails/ai-memory">ai-memory</a> by akitaonrails (MIT)။ Source code: <a href="https://github.com/mymyanmarland/cursormemo">github.com/mymyanmarland/cursormemo</a>
+  <div class="wrap">
+    <span class="L-mm mm">CursorMemo — Funapp (Kyaw Myo Naing) ၏ open source ထုတ်ကုန် · MIT License · နောက်ကွယ်က program: <a href="https://github.com/akitaonrails/ai-memory">ai-memory</a> (akitaonrails, MIT) · Source code: <a href="https://github.com/mymyanmarland/cursormemo">github.com/mymyanmarland/cursormemo</a></span>
+    <span class="L-en">CursorMemo — an open-source product by Funapp (Kyaw Myo Naing) · MIT License · Engine: <a href="https://github.com/akitaonrails/ai-memory">ai-memory</a> (akitaonrails, MIT) · Source: <a href="https://github.com/mymyanmarland/cursormemo">github.com/mymyanmarland/cursormemo</a></span>
   </div>
 </footer>
 
 <script>
-  // Tabs
+  // ---- tabs ----
   var tabs = document.querySelectorAll('.tab');
-  tabs.forEach(function(tab){
-    tab.addEventListener('click', function(){
-      tabs.forEach(function(t){ t.classList.remove('active'); });
-      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-      tab.classList.add('active');
-      document.getElementById('page-' + tab.getAttribute('data-page')).classList.add('active');
-      window.scrollTo({top: document.querySelector('.tabbar').offsetTop, behavior:'smooth'});
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){x.classList.remove('active')});
+      t.classList.add('active');
+      document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+      document.getElementById('page-' + t.dataset.page).classList.add('active');
+      window.scrollTo({top: document.querySelector('.tabbar').offsetTop - 6, behavior:'smooth'});
     });
   });
-  // Copy buttons
-  document.querySelectorAll('button.copy').forEach(function(btn){
+
+  // ---- copy buttons ----
+  document.querySelectorAll('.copy').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var el = document.getElementById(btn.getAttribute('data-target'));
+      var el = document.getElementById(btn.dataset.target);
+      if(!el) return;
       var text = el.textContent.trim();
-      function done(){ var old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(function(){ btn.textContent = old; }, 1800); }
+      var restore = function(){ btn.textContent = 'Copy'; };
+      var done = function(){ btn.textContent = 'Copied ✓'; setTimeout(restore, 1600); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallback(); });
+      } else { fallback(); }
       function fallback(){
         var ta = document.createElement('textarea');
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); } catch(e) {}
-        document.body.removeChild(ta); done();
+        ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); done(); }catch(e){}
+        document.body.removeChild(ta);
       }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done).catch(fallback);
-      } else { fallback(); }
     });
   });
+
+  // ---- language toggle ----
+  function setLang(l){
+    document.documentElement.setAttribute('data-lang', l);
+    document.documentElement.lang = (l === 'en') ? 'en' : 'my';
+    document.getElementById('lang-mm').classList.toggle('on', l === 'mm');
+    document.getElementById('lang-en').classList.toggle('on', l === 'en');
+    document.title = (l === 'en') ? 'CursorMemo — Memory for Cursor' : 'CursorMemo — Cursor ရဲ့ မှတ်ဉာဏ်';
+    try{ localStorage.setItem('cm-lang', l); }catch(e){}
+  }
+  document.getElementById('lang-mm').addEventListener('click', function(){ setLang('mm'); });
+  document.getElementById('lang-en').addEventListener('click', function(){ setLang('en'); });
+  (function(){
+    var q = new URLSearchParams(location.search).get('lang');
+    var saved = null;
+    try{ saved = localStorage.getItem('cm-lang'); }catch(e){}
+    if(q === 'en' || q === 'mm'){ setLang(q); }
+    else if(saved === 'en' || saved === 'mm'){ setLang(saved); }
+  })();
 </script>
 </body>
 </html>
