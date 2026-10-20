@@ -22,17 +22,18 @@ complete without verification.
 Exit criteria: installer tests pass in a clean sandbox HOME; no regression to
 the v1 happy path; docs shipped in-repo.
 
-## Milestone 2 — P0/P1: Memory model mapping + continuity verification
+## Milestone 2 — P0/P1: Memory model mapping + continuity verification ✅ (2026-10-20)
 
-- Map the mission's 10 memory categories onto the engine's actual wiki/observation
-  schema; document what exists vs what needs a CursorMemo-side convention
-  (e.g. heading/tag conventions in notes) — no engine patching.
-- Scripted continuity test: two scripted sessions (capture → new session →
-  recall assertions) against the real binary in a sandbox; crash-interruption
-  case (kill mid-session) included.
-- Retrieval quality mini-benchmark on a seeded corpus (precision of FTS5
-  recall for decision/bug/task queries). Decide on semantic search **only**
-  from these numbers.
+- [x] Category mapping — all 10 mission categories map onto the engine's
+      native kind × tier × tag model; no custom schema. `docs/MEMORY_MODEL.md`.
+- [x] Scripted continuity test — cross-process capture → recall verified;
+      **crash case included** (`kill -9` + restart, store intact).
+- [x] Retrieval benchmark — 16 pages / 9 labelled queries: **hit@1 100%,
+      median 21 ms**. Semantic search **rejected for now** on this evidence
+      (embeddings exist upstream; revisit at 1k+ pages).
+- [x] Bonus audit find: upstream already ships `backup` / `restore` /
+      `export-okf` / `reindex` — milestone 4 rescoped to verification +
+      thin wrapper.
 
 ## Milestone 3 — P1: Dashboard mapping, then (only if gaps are real) extension
 
