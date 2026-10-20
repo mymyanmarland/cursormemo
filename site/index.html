@@ -497,6 +497,48 @@
         </div>
       </div>
     </div>
+
+    <h2 class="mt" style="font-size:21px"><span class="L-mm mm">တင်တာ အောင်မြင်လား စစ်နည်း</span><span class="L-en">How to check it really works</span></h2>
+    <p class="sub L-mm mm" style="margin-bottom:14px">တင်ပြီးရင် အဆင့် ၄ ဆင့်နဲ့ စစ်လို့ရတယ်။ နောက်ဆုံး အဆင့်က အရေးကြီးဆုံး စမ်းသပ်ချက်ပဲ။</p>
+    <p class="sub L-en" style="margin-bottom:14px">After installing, verify with these four checks. The last one is the test that really matters.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3 class="L-mm mm">Program ရှိလား စစ်</h3><h3 class="L-en">Check the program is installed</h3>
+          <p class="L-mm mm">Terminal (PowerShell) မှာ ဒီ command တွေ run ပါ။ <code>3.1.1</code> လို့ ပေါ်ပြီး doctor က စစ်ဆေးချက် အဆင်ပြေတယ်လို့ ပြရင် engine အောင်မြင်ပြီ:</p>
+          <p class="L-en">Run these in a terminal (PowerShell). If the version shows <code>3.1.1</code> and the doctor checks pass, the engine is in:</p>
+          <div class="cmdrow" style="margin-top:10px">
+            <code id="cmd-verify">ai-memory --version; ai-memory doctor; ai-memory status</code>
+            <button class="copy" data-target="cmd-verify">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3 class="L-mm mm">Server run နေလား စစ်</h3><h3 class="L-en">Check the server is running</h3>
+          <p class="L-mm mm">Browser မှာ <code>http://127.0.0.1:49374/web</code> ဖွင့်လို့ sign in တောင်းတဲ့ မျက်နှာ ပေါ်လာရင် server အလုပ်လုပ်နေပြီ။ အပေါ်က နည်းအတိုင်း ဝင်လို့ရရင် အဲ့အပိုင်း အတည်ပြုပြီ။</p>
+          <p class="L-en">Open <code>http://127.0.0.1:49374/web</code> in your browser. If the sign-in prompt appears, the server is running — and once you can sign in with the steps above, that part is confirmed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3 class="L-mm mm">Cursor နဲ့ ချိတ်မိလား စစ်</h3><h3 class="L-en">Check Cursor is wired up</h3>
+          <p class="L-mm mm">Cursor ထဲမှာ Settings → MCP ကို ဖွင့်ပါ။ <b>ai-memory</b> ဆိုတဲ့ server တစ်ခု enabled ဖြစ်နေရမယ်။ မတွေ့ရင် ချိတ်ဆက်မှု မအောင်မြင်သေးဘူး — installer ကို ပြန် run ကြည့်ပါ။</p>
+          <p class="L-en">In Cursor, open Settings → MCP. An <b>ai-memory</b> server must be listed and enabled. If it is missing, the wiring did not finish — run the installer again.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3 class="L-mm mm">တကယ် မှတ်မိလား စမ်း — အရေးကြီးဆုံး</h3><h3 class="L-en">Test the memory itself — the one that matters</h3>
+          <p class="L-mm mm">Project တစ်ခုမှာ chat ဖွင့်ပြီး AI ကို အချက်တစ်ခု ပြောထားပါ (ဥပမာ "ဒီ project မှာ PostgreSQL သုံးတယ်၊ မှတ်ထားပေး")။ ပြီးရင် chat ပိတ်ပြီး Dashboard မှာ အဲ့ဒီ project အောက် page အသစ် တိုးနေလား ကြည့်ပါ။ နောက်ဆုံး chat အသစ် ဖွင့်ပြီး ဘာမှ ပြန်မရှင်းပြဘဲ <code>"What do you remember about this project?"</code> လို့ မေးပါ — အရင် chat က အချက်တွေ ပြန်ဖြေနိုင်ရင် တကယ် အလုပ်ဖြစ်ပြီ။</p>
+          <p class="L-en">In a project chat, tell the AI one fact (for example "this project uses PostgreSQL — remember that"). Close the chat and check the dashboard: a new page should appear under that project. Then open a fresh chat and, without explaining anything again, ask <code>"What do you remember about this project?"</code> — if it answers with facts from the earlier chat, the memory truly works.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ TAB: TECH ============ -->
@@ -641,6 +683,11 @@
         <h3 class="L-mm mm">Dashboard ဝင်တာ username/password တောင်းနေတယ် — ဘာထည့်ရမလဲ?</h3><h3 class="L-en">The dashboard asks for a username/password — what do I enter?</h3>
         <p class="L-mm mm">Username က ကြိုက်တာ ထည့်လို့ရတယ် (ဥပမာ <code>admin</code>)။ Password က ကိုယ့်စက်ထဲက token ဖိုင်ထဲက စာသား — Windows ဆိုရင် PowerShell မှာ <code>Get-Content "$env:LOCALAPPDATA\ai-memory\auth-tokens\default"</code> နဲ့ ကြည့်ပြီး ကူးထည့်ပါ။ အသေးစိတ်ကို သုံးနည်း စာမျက်နှာက "Dashboard ဝင်နည်း" အပိုင်းမှာ ရေးထားတယ်။</p>
         <p class="L-en">The username can be anything (for example <code>admin</code>). The password is the text in the token file on your machine — on Windows, view it in PowerShell with <code>Get-Content "$env:LOCALAPPDATA\ai-memory\auth-tokens\default"</code> and paste it in. Full steps are in the "Signing in to the dashboard" section of the Usage page.</p>
+      </div>
+      <div class="qa">
+        <h3 class="L-mm mm">တင်တာ အောင်မြင်လား၊ တကယ် အလုပ်ဖြစ်လား ဘယ်လိုသိမလဲ?</h3><h3 class="L-en">How do I know the install worked and the memory really functions?</h3>
+        <p class="L-mm mm">Terminal မှာ <code>ai-memory doctor</code> နဲ့ စစ်ပါ၊ Cursor ထဲ Settings → MCP မှာ ai-memory server enabled ဖြစ်နေလား ကြည့်ပါ။ အသေချာဆုံး စမ်းနည်း ကတော့ chat တစ်ခုမှာ အချက်တစ်ခု မှတ်ခိုင်းပြီး chat အသစ်မှာ ပြန်မေးကြည့်တာပဲ — အသေးစိတ်ကို သုံးနည်း စာမျက်နှာက "တင်တာ အောင်မြင်လား စစ်နည်း" အပိုင်းမှာ ရေးထားတယ်။</p>
+        <p class="L-en">Run <code>ai-memory doctor</code> in a terminal and check that the ai-memory server is enabled under Cursor's Settings → MCP. The surest test: have one chat remember a fact, then ask about it in a fresh chat. Full steps are in the "How to check it really works" section of the Usage page.</p>
       </div>
       <div class="qa">
         <h3 class="L-mm mm">ဒါက ai-memory နဲ့ ဘာကွာလဲ?</h3><h3 class="L-en">How is this different from ai-memory itself?</h3>
