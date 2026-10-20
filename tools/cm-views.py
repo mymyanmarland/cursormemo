@@ -96,6 +96,51 @@ button{background:rgba(18,24,50,.6);border:1px solid rgba(148,163,255,.3);color:
 html[data-lang=mm] .en{display:none} html[data-lang=en] .mm{display:none}
 """
 
+def parse_date(s):
+    import datetime
+    try:
+        return datetime.datetime.fromisoformat(s.replace("Z", "+00:00")).date()
+    except Exception:
+        return None
+
+def project_intelligence(pages):
+    """Deterministic, record-derived observations per project.
+    Facts come straight from recorded pages; 'health notes' are simple
+    date/count rules over those records — never model inference."""
+    import datetime
+    today = datetime.date.today()
+    by_project = {}
+    for p in pages:
+        by_project.setdefault(p["project"], []).append(p)
+    out = {}
+    for proj, ps in sorted(by_project.items()):
+        tasks = [p for p in ps if p["tier"] == "working" or "pending" in p["tags"]]
+        decisions = [p for p in ps if p["kind"] == "decision"]
+        bugs = [p for p in ps if p["kind"] == "gotcha" and "failed-approach" not in p["tags"]]
+        failed = [p for p in ps if "failed-approach" in p["tags"]]
+        episodic = [p for p in ps if p["tier"] == "episodic"]
+        dates = [d for d in (parse_date(p["at"]) for p in ps) if d]
+        last = max(dates) if dates else None
+        notes = []
+        for t in tasks:
+            d = parse_date(t["at"])
+            if d and (today - d).days >= 14:
+                notes.append(("warn", f"Task '{t['title']}' has been open {(today - d).days} days (recorded {t['at'][:10]})."))
+        if len(failed) >= 2:
+            notes.append(("info", f"{len(failed)} failed approaches are recorded — check them before retrying similar work."))
+        if ps and not decisions:
+            notes.append(("info", "No decisions recorded yet for this project."))
+        if last and (today - last).days >= 30 and tasks:
+            notes.append(("warn", f"No recorded activity for {(today - last).days} days, with {len(tasks)} task(s) still open."))
+        out[proj] = {
+            "pages": ps, "tasks": tasks, "decisions": decisions, "bugs": bugs,
+            "failed": failed, "last": last.isoformat() if last else "—",
+            "latest_summary": episodic[0] if episodic else None,
+            "notes": notes,
+            "oldest_task": min(tasks, key=lambda t: t["at"]) if tasks else None,
+        }
+    return out
+
 def page_card(p, extra=""):
     tags = "".join(f'<span class="tag">{html.escape(t)}</span>' for t in p["tags"])
     return (f'<div class="card"><b>{html.escape(p["title"])}</b> {extra}<br>'
@@ -112,6 +157,25 @@ def main():
     tasks = [p for p in pages if p["tier"] == "working" or "pending" in p["tags"]]
     decisions = [p for p in pages if p["kind"] == "decision"]
     projects = sorted({p["project"] for p in pages})
+    intel = project_intelligence(pages)
+
+    def intel_html():
+        blocks = []
+        for proj, d in intel.items():
+            notes = "".join(
+                f'<div>{"⚠️" if lvl == "warn" else "ℹ️"} {html.escape(txt)}</div>' for lvl, txt in d["notes"])
+            summ = (f'<div class="meta">{bi("နောက်ဆုံး session အကျဉ်းချုပ်", "Latest session summary")}: '
+                    f'<b>{html.escape(d["latest_summary"]["title"])}</b> — {html.escape(d["latest_summary"]["summary"])}</div>') if d["latest_summary"] else ""
+            nxt = (f'<div class="meta">{bi("မှတ်တမ်းအရ အဟောင်းဆုံး ကျန်နေတဲ့ အလုပ်", "Oldest recorded open task")}: '
+                   f'<b>{html.escape(d["oldest_task"]["title"])}</b></div>') if d["oldest_task"] else ""
+            bugs = "".join(f'<div>🐛 <b>{html.escape(b["title"])}</b> — {html.escape(b["summary"])}</div>' for b in d["bugs"])
+            blocks.append(
+                f'<div class="card"><b>📁 {html.escape(proj)}</b><br>'
+                f'<span class="meta">{bi("နောက်ဆုံး လှုပ်ရှားမှု", "Last activity")}: {html.escape(d["last"])} · '
+                f'{len(d["pages"])} {bi("စာမျက်နှာ", "pages")} · {len(d["tasks"])} {bi("လုပ်ရန်ကျန်", "open tasks")} · '
+                f'{len(d["decisions"])} {bi("ဆုံးဖြတ်ချက်", "decisions")} · {len(d["failed"])} {bi("မအောင်မြင်ခဲ့တဲ့ နည်း", "failed approaches")}</span>'
+                f'{summ}{nxt}{bugs}{notes}</div>')
+        return "".join(blocks)
 
     def bi(mm, en):
         return f'<span class="mm">{mm}</span><span class="en">{en}</span>'
@@ -129,6 +193,9 @@ def main():
 <div class="stat"><b>{len(tasks)}</b>{bi('လုပ်ရန်ကျန်', 'Open tasks')}</div>
 <div class="stat"><b>{len(decisions)}</b>{bi('ဆုံးဖြတ်ချက်များ', 'Decisions')}</div>
 </div>
+<h2>{bi('🔎 Project အခြေအနေ (Project Intelligence)', '🔎 Project Intelligence')}</h2>
+<p class="meta">{bi('အောက်ပါတို့သည် မှတ်တမ်းတင် ထားတဲ့ စာမျက်နှာတွေကနေ တိုက်ရိုက် တွက်ထားတာ — သတိပေးချက်များသည် ရက်စွဲ/အရေအတွက် စည်းမျဉ်းများသာ ဖြစ်သည်။', 'Everything below is computed directly from recorded pages — health notes are simple date/count rules, not AI judgement.')}</p>
+{intel_html()}
 <h2>{bi('📌 လုပ်ရန်ကျန်တာတွေ (Tasks)', '📌 Tasks')}</h2>
 {''.join(page_card(p) for p in tasks) or '<p class="meta">—</p>'}
 <h2>{bi('🧭 ဆုံးဖြတ်ချက် မှတ်တမ်း (Decision Log)', '🧭 Decision Log')}</h2>
